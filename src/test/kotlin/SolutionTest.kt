@@ -6,14 +6,22 @@ class SolutionTest {
 
     @Test
     fun testLengthOfLongestSubstring() {
-        assertEquals(3, solution.lengthOfLongestSubstring("abcabcbb"))
-        assertEquals(1, solution.lengthOfLongestSubstring("bbbbb"))
-        assertEquals(3, solution.lengthOfLongestSubstring("pwwkew"))
-        assertEquals(0, solution.lengthOfLongestSubstring(""))
-        assertEquals(1, solution.lengthOfLongestSubstring("a"))
-        assertEquals(2, solution.lengthOfLongestSubstring("au"))
-        assertEquals(3, solution.lengthOfLongestSubstring("dvdf"))
-        assertEquals(4, solution.lengthOfLongestSubstring("abcd"))
-        assertEquals(5, solution.lengthOfLongestSubstring("tmmzuxt"))
+
+
+            @Test
+            fun testIsPalindrome() {
+
+                assertEquals(true, solution.isPalindrome(0))
+                assertEquals(true, solution.isPalindrome(121))
+                assertEquals(true, solution.isPalindrome(12321))
+                assertEquals(true, solution.isPalindrome(1234321))
+
+
+                assertEquals(false, solution.isPalindrome(-121))
+                assertEquals(false, solution.isPalindrome(10))
+                assertEquals(false, solution.isPalindrome(123456))
+                assertEquals(false, solution.isPalindrome(12345678))
+            }
+        }
+
     }
-}
