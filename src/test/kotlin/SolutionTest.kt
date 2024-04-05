@@ -4,22 +4,18 @@ import kotlin.test.Test
 
 
 class SolutionTest {
-    private val solution = Solution()
+    @Test
+    fun test1() {
+        val nums = intArrayOf(2, 5, 3, 9, 5, 3)
+        val expected = 3
+        assertEquals(expected, Solution().minimumAverageDifference(nums))
+    }
 
     @Test
-    fun testReverse() {
-        // Положительные числа
-        assertEquals(321, solution.reverse(123))
-        assertEquals(54321, solution.reverse(12345))
-        assertEquals(21, solution.reverse(120))
-
-        // Отрицательные числа
-        assertEquals(-321, solution.reverse(-123))
-        assertEquals(-54321, solution.reverse(-12345))
-
-        // Особые случаи
-        assertEquals(0, solution.reverse(0))
-        assertEquals(0, solution.reverse(1534236469)) // Превышение максимального значения
-        assertEquals(0, solution.reverse(-2147483648)) // Превышение минимального значения
+    fun test2() {
+        val nums = intArrayOf(0)
+        val expected = 0
+        assertEquals(expected, Solution().minimumAverageDifference(nums))
     }
+
 }
