@@ -6,16 +6,29 @@ import kotlin.test.Test
 class SolutionTest {
     @Test
     fun test1() {
-        val nums = intArrayOf(2, 5, 3, 9, 5, 3)
-        val expected = 3
-        assertEquals(expected, Solution().minimumAverageDifference(nums))
+        val solution = Solution()
+        val nums = intArrayOf(-1, 0, 1, 2, -1, -4)
+        val expected = listOf(listOf(-1, -1, 2), listOf(-1, 0, 1))
+        val result = solution.threeSum(nums)
+        assertEquals(expected, result)
     }
 
     @Test
     fun test2() {
-        val nums = intArrayOf(0)
-        val expected = 0
-        assertEquals(expected, Solution().minimumAverageDifference(nums))
+        val solution = Solution()
+        val nums = intArrayOf(0, 1, 1)
+        val expected = emptyList<List<Int>>()
+        val result = solution.threeSum(nums)
+        assertEquals(expected, result)
+    }
+
+    @Test
+    fun test3() {
+        val solution = Solution()
+        val nums = intArrayOf(0, 0, 0)
+        val expected = listOf(listOf(0, 0, 0))
+        val result = solution.threeSum(nums)
+        assertEquals(expected, result)
     }
 
 }
