@@ -4,31 +4,50 @@ import kotlin.test.Test
 
 
 class SolutionTest {
+
     @Test
-    fun test1() {
+    fun testExample1() {
         val solution = Solution()
-        val nums = intArrayOf(-1, 0, 1, 2, -1, -4)
-        val expected = listOf(listOf(-1, -1, 2), listOf(-1, 0, 1))
-        val result = solution.threeSum(nums)
-        assertEquals(expected, result)
+        val input = "PAYPALISHIRING"
+        val numRows = 3
+        val expectedOutput = "PAHNAPLSIIGYIR"
+        assertEquals(expectedOutput, solution.convert(input, numRows))
     }
 
     @Test
-    fun test2() {
+    fun testExample2() {
         val solution = Solution()
-        val nums = intArrayOf(0, 1, 1)
-        val expected = emptyList<List<Int>>()
-        val result = solution.threeSum(nums)
-        assertEquals(expected, result)
+        val input = "PAYPALISHIRING"
+        val numRows = 4
+        val expectedOutput = "PINALSIGYAHRPI"
+        assertEquals(expectedOutput, solution.convert(input, numRows))
     }
 
     @Test
-    fun test3() {
+    fun testExample3() {
         val solution = Solution()
-        val nums = intArrayOf(0, 0, 0)
-        val expected = listOf(listOf(0, 0, 0))
-        val result = solution.threeSum(nums)
-        assertEquals(expected, result)
+        val input = "A"
+        val numRows = 1
+        val expectedOutput = "A"
+        assertEquals(expectedOutput, solution.convert(input, numRows))
+    }
+
+    @Test
+    fun testEmptyString() {
+        val solution = Solution()
+        val input = ""
+        val numRows = 3
+        val expectedOutput = ""
+        assertEquals(expectedOutput, solution.convert(input, numRows))
+    }
+
+    @Test
+    fun testSingleRow() {
+        val solution = Solution()
+        val input = "HELLO"
+        val numRows = 1
+        val expectedOutput = "HELLO"
+        assertEquals(expectedOutput, solution.convert(input, numRows))
     }
 
 }
