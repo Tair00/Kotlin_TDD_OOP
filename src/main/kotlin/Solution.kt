@@ -1,30 +1,29 @@
 class Solution {
-    fun longestPalindrome(s: String): String {
-        var start = 0
-        var end = 0
+    fun myAtoi(s: String): Int {
+        var i = 0
+        var sign = 1
+        var result = 0
 
-        for (i in 0 until s.length) {
-            val len1 = expandAroundCenter(s, i, i)
-            val len2 = expandAroundCenter(s, i, i + 1)
-            val len = maxOf(len1, len2)
-            if (len > end - start) {
-                start = i - (len - 1) / 2
-                end = i + len / 2
+        while (i < s.length && s[i] == ' ') {
+            i++
+        }
+
+        if (i < s.length && (s[i] == '-' || s[i] == '+')) {
+            sign = if (s[i] == '-') -1 else 1
+            i++
+        }
+
+        while (i < s.length && s[i].isDigit()) {
+            val digit = s[i] - '0'
+
+            if (result > Int.MAX_VALUE / 10 || (result == Int.MAX_VALUE / 10 && digit > Int.MAX_VALUE % 10)) {
+                return if (sign == 1) Int.MAX_VALUE else Int.MIN_VALUE
             }
+
+            result = result * 10 + digit
+            i++
         }
 
-        return s.substring(start, end + 1)
-    }
-
-    private fun expandAroundCenter(s: String, left: Int, right: Int): Int {
-        var l = left
-        var r = right
-
-        while (l >= 0 && r < s.length && s[l] == s[r]) {
-            l--
-            r++
-        }
-
-        return r - l - 1
+        return result * sign
     }
 }
