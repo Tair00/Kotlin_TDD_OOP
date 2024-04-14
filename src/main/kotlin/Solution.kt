@@ -1,31 +1,34 @@
 class Solution {
-    fun threeSumClosest(nums: IntArray, target: Int): Int {
-        nums.sort()
-        var closestSum = nums[0] + nums[1] + nums[2]
+    fun letterCombinations(digits: String): List<String> {
+        if (digits.isEmpty()) return emptyList()
 
-        for (i in nums.indices) {
-            var left = i + 1
-            var right = nums.size - 1
+        val digitMap = mapOf(
+            '2' to listOf('a', 'b', 'c'),
+            '3' to listOf('d', 'e', 'f'),
+            '4' to listOf('g', 'h', 'i'),
+            '5' to listOf('j', 'k', 'l'),
+            '6' to listOf('m', 'n', 'o'),
+            '7' to listOf('p', 'q', 'r', 's'),
+            '8' to listOf('t', 'u', 'v'),
+            '9' to listOf('w', 'x', 'y', 'z')
+        )
 
-            while (left < right) {
-                val sum = nums[i] + nums[left] + nums[right]
+        val result = mutableListOf<String>()
+        generateCombinations(digits, 0, "", digitMap, result)
+        return result
+    }
 
-                if (sum == target) {
-                    return sum
-                }
-
-                if (Math.abs(target - sum) < Math.abs(target - closestSum)) {
-                    closestSum = sum
-                }
-
-                if (sum < target) {
-                    left++
-                } else {
-                    right--
-                }
-            }
+    private fun generateCombinations(digits: String, index: Int, combination: String, digitMap: Map<Char, List<Char>>, result: MutableList<String>) {
+        if (index == digits.length) {
+            result.add(combination)
+            return
         }
 
-        return closestSum
+        val currentDigit = digits[index]
+        val letters = digitMap[currentDigit] ?: return
+
+        for (letter in letters) {
+            generateCombinations(digits, index + 1, combination + letter, digitMap, result)
+        }
     }
 }
