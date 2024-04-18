@@ -1,39 +1,50 @@
+import org.junit.Assert
 import org.junit.jupiter.api.Assertions.*
 import kotlin.test.Test
-
 
 
 class SolutionTest {
 
     @Test
-    fun test1() {
+    fun testMergeTwoLists() {
+
+        val list1 = createLinkedList(intArrayOf(1, 2, 4))
+        val list2 = createLinkedList(intArrayOf(1, 3, 4))
+
         val solution = Solution()
-        val digits = "23"
-        val expected = listOf("ad","ae","af","bd","be","bf","cd","ce","cf")
-        assertEquals(expected, solution.letterCombinations(digits).sorted())
+        val mergedList = solution.mergeTwoLists(list1, list2)
+
+
+        val expectedValues = intArrayOf(1, 1, 2, 3, 4, 4)
+        val expectedList = createLinkedList(expectedValues)
+
+
+        Assert.assertTrue(areListsEqual(expectedList, mergedList))
     }
 
-    @Test
-    fun test2() {
-        val solution = Solution()
-        val digits = ""
-        val expected = emptyList<String>()
-        assertEquals(expected, solution.letterCombinations(digits))
+    private fun createLinkedList(values: IntArray): ListNode? {
+        if (values.isEmpty()) return null
+        val head = ListNode(values[0])
+        var current: ListNode? = head
+        for (i in 1 until values.size) {
+            current?.next = ListNode(values[i])
+            current = current?.next
+        }
+        return head
     }
 
-    @Test
-    fun test3() {
-        val solution = Solution()
-        val digits = "2"
-        val expected = listOf("a","b","c")
-        assertEquals(expected, solution.letterCombinations(digits).sorted())
-    }
+    private fun areListsEqual(list1: ListNode?, list2: ListNode?): Boolean {
+        var p1: ListNode? = list1
+        var p2: ListNode? = list2
 
-    @Test
-    fun test4() {
-        val solution = Solution()
-        val digits = "79"
-        val expected = listOf("pw", "px", "py", "pz", "qw", "qx", "qy", "qz", "rw", "rx", "ry", "rz", "sw", "sx", "sy", "sz")
-        assertEquals(expected, solution.letterCombinations(digits).sorted())
+        while (p1 != null && p2 != null) {
+            if (p1.`val` != p2.`val`) {
+                return false
+            }
+            p1 = p1.next
+            p2 = p2.next
+        }
+
+        return p1 == null && p2 == null
     }
 }
