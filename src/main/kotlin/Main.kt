@@ -1,7 +1,8 @@
 fun main(args: Array<String>) {
-    println("Hello World!")
+ val solution = Solution()
 
-    // Try adding program arguments via Run/Debug configuration.
-    // Learn more about running applications: https://www.jetbrains.com/help/idea/running-applications.html.
-    println("Program arguments: ${args.joinToString()}")
-}
+ // Пример использования функции isValid с различными строками
+ println(solution.isValid("(){}[]")) // Выведет true
+ println(solution.isValid("({)}"))   // Выведет false
+ println(solution.isValid("((((()")) // Выведет false
+ }

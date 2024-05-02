@@ -1,19 +1,29 @@
+import java.util.*
 
 class Solution {
-    fun intToRoman(num: Int): String {
-        val decimalValues = intArrayOf(1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1)
-        val romanSymbols = arrayOf("M", "CM", "D", "CD", "C", "XC", "L", "XL", "X", "IX", "V", "IV", "I")
+    fun isValid(s: String): Boolean {
+        val stack = Stack<Char>()
 
-        var result = ""
-        var remaining = num
+        for (char in s) {
+            if (char == '(' || char == '[' || char == '{') {
+                stack.push(char)
+            } else {
+                if (stack.isEmpty()) {
+                    return false // Если стек пустой и мы встречаем закрывающую скобку, строка недопустима
+                }
 
-        for (i in decimalValues.indices) {
-            while (remaining >= decimalValues[i]) {
-                result += romanSymbols[i]
-                remaining -= decimalValues[i]
+                val lastOpen = stack.pop()
+
+                // Проверяем соответствие открытой и закрывающей скобок
+                if ((char == ')' && lastOpen != '(') ||
+                    (char == ']' && lastOpen != '[') ||
+                    (char == '}' && lastOpen != '{')) {
+                    return false
+                }
             }
         }
 
-        return result
+        // Проверяем, что стек пуст после обхода всей строки
+        return stack.isEmpty()
     }
 }

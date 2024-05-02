@@ -13,13 +13,6 @@ class SolutionTest {
         val solution = Solution()
 
 
-        assertEquals("MMMDCCXLIX", solution.intToRoman(3749))
-
-        assertEquals("LVIII", solution.intToRoman(58))
-
-        assertEquals("MCMXCIV", solution.intToRoman(1994))
-
-        assertEquals("III", solution.intToRoman(3))
-        assertEquals("CDXLIV", solution.intToRoman(444))
+        assertEquals(true, solution.isValid("{}"))
     }
 }
