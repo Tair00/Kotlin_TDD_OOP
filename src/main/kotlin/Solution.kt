@@ -1,29 +1,19 @@
 import java.util.*
 
 class Solution {
-    fun isValid(s: String): Boolean {
-        val stack = Stack<Char>()
+    fun removeDuplicates(nums: IntArray): Int {
+        if (nums.isEmpty()) return 0
+        var uniqueCount = 1
+        var lastUniqueIndex = 0
 
-        for (char in s) {
-            if (char == '(' || char == '[' || char == '{') {
-                stack.push(char)
-            } else {
-                if (stack.isEmpty()) {
-                    return false // Если стек пустой и мы встречаем закрывающую скобку, строка недопустима
-                }
-
-                val lastOpen = stack.pop()
-
-                // Проверяем соответствие открытой и закрывающей скобок
-                if ((char == ')' && lastOpen != '(') ||
-                    (char == ']' && lastOpen != '[') ||
-                    (char == '}' && lastOpen != '{')) {
-                    return false
-                }
+        for (i in 1 until nums.size) {
+            if (nums[i] != nums[lastUniqueIndex]) {
+                lastUniqueIndex++
+                nums[lastUniqueIndex] = nums[i]
+                uniqueCount++
             }
         }
 
-        // Проверяем, что стек пуст после обхода всей строки
-        return stack.isEmpty()
+        return uniqueCount
     }
 }
