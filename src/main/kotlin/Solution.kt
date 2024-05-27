@@ -1,19 +1,21 @@
-import java.util.*
-
 class Solution {
-    fun removeDuplicates(nums: IntArray): Int {
-        if (nums.isEmpty()) return 0
-        var uniqueCount = 1
-        var lastUniqueIndex = 0
+    fun generateParenthesis(n: Int): List<String> {
+        val result = mutableListOf<String>()
+        generateParenthesisHelper(result, "", 0, 0, n)
+        return result
+    }
 
-        for (i in 1 until nums.size) {
-            if (nums[i] != nums[lastUniqueIndex]) {
-                lastUniqueIndex++
-                nums[lastUniqueIndex] = nums[i]
-                uniqueCount++
-            }
+    private fun generateParenthesisHelper(result: MutableList<String>, current: String, open: Int, close: Int, max: Int) {
+        if (current.length == max * 2) {
+            result.add(current)
+            return
         }
 
-        return uniqueCount
+        if (open < max) {
+            generateParenthesisHelper(result, current + "(", open + 1, close, max)
+        }
+        if (close < open) {
+            generateParenthesisHelper(result, current + ")", open, close + 1, max)
+        }
     }
 }
