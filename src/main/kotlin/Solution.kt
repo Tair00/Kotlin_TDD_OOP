@@ -1,21 +1,27 @@
 class Solution {
-    fun generateParenthesis(n: Int): List<String> {
-        val result = mutableListOf<String>()
-        generateParenthesisHelper(result, "", 0, 0, n)
+    fun permuteUnique(nums: IntArray): List<List<Int>> {
+        val result = mutableListOf<List<Int>>()
+        val used = BooleanArray(nums.size)
+        nums.sort()
+        backtrack(nums, mutableListOf(), used, result)
         return result
     }
 
-    private fun generateParenthesisHelper(result: MutableList<String>, current: String, open: Int, close: Int, max: Int) {
-        if (current.length == max * 2) {
-            result.add(current)
+    private fun backtrack(nums: IntArray, current: MutableList<Int>, used: BooleanArray, result: MutableList<List<Int>>) {
+        if (current.size == nums.size) {
+            result.add(ArrayList(current))
             return
         }
 
-        if (open < max) {
-            generateParenthesisHelper(result, current + "(", open + 1, close, max)
-        }
-        if (close < open) {
-            generateParenthesisHelper(result, current + ")", open, close + 1, max)
+        for (i in nums.indices) {
+            if (used[i]) continue
+            if (i > 0 && nums[i] == nums[i - 1] && !used[i - 1]) continue
+
+            used[i] = true
+            current.add(nums[i])
+            backtrack(nums, current, used, result)
+            current.removeAt(current.size - 1)
+            used[i] = false
         }
     }
 }
