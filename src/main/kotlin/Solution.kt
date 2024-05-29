@@ -1,27 +1,22 @@
 class Solution {
-    fun permuteUnique(nums: IntArray): List<List<Int>> {
+    fun permute(nums: IntArray): List<List<Int>> {
         val result = mutableListOf<List<Int>>()
-        val used = BooleanArray(nums.size)
-        nums.sort()
-        backtrack(nums, mutableListOf(), used, result)
+        backtrack(nums.toMutableList(), mutableListOf(), result)
         return result
     }
 
-    private fun backtrack(nums: IntArray, current: MutableList<Int>, used: BooleanArray, result: MutableList<List<Int>>) {
-        if (current.size == nums.size) {
-            result.add(ArrayList(current))
+    private fun backtrack(nums: MutableList<Int>, path: MutableList<Int>, result: MutableList<List<Int>>) {
+        if (nums.isEmpty()) {
+            result.add(ArrayList(path))
             return
         }
 
         for (i in nums.indices) {
-            if (used[i]) continue
-            if (i > 0 && nums[i] == nums[i - 1] && !used[i - 1]) continue
-
-            used[i] = true
-            current.add(nums[i])
-            backtrack(nums, current, used, result)
-            current.removeAt(current.size - 1)
-            used[i] = false
+            val num = nums.removeAt(i)
+            path.add(num)
+            backtrack(nums, path, result)
+            path.removeAt(path.size - 1)
+            nums.add(i, num)
         }
     }
 }
