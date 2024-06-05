@@ -1,20 +1,19 @@
 class Solution {
-    fun searchInsert(nums: IntArray, target: Int): Int {
-        var left = 0
-        var right = nums.size - 1
+    fun jump(nums: IntArray): Int {
+        if (nums.size < 2) return 0
 
-        while (left <= right) {
-            val mid = left + (right - left) / 2
+        var jumps = 0
+        var currentEnd = 0
+        var farthest = 0
 
-            if (nums[mid] == target) {
-                return mid
-            } else if (nums[mid] < target) {
-                left = mid + 1
-            } else {
-                right = mid - 1
+        for (i in 0 until nums.size - 1) {
+            farthest = maxOf(farthest, i + nums[i])
+            if (i == currentEnd) {
+                jumps++
+                currentEnd = farthest
+                if (currentEnd >= nums.size - 1) break
             }
         }
-
-        return left
+        return jumps
     }
 }
