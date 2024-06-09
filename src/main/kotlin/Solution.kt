@@ -1,20 +1,21 @@
 class Solution {
+    fun lengthOfLastWord(s: String): Int {
+        var pointer = s.length - 1
 
-    fun minimumChairs(s: String): Int {
-        var currentPeople = 0
-        var maxPeople = 0
-
-        for (char in s) {
-            if (char == 'E') {
-                currentPeople++
-                if (currentPeople > maxPeople) {
-                    maxPeople = currentPeople
-                }
-            } else if (char == 'L') {
-                currentPeople--
-            }
+        while(s[pointer] == ' ') {
+            pointer -= 1
+            if(pointer < 0) break
         }
 
-        return maxPeople
+        val endPointer = pointer
+
+        while(s[pointer] != ' '){
+            pointer -=1
+            if(pointer < 0) break
+        }
+
+        val startPointer = pointer
+
+        return endPointer - startPointer
     }
 }
