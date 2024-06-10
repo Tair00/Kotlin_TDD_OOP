@@ -1,21 +1,32 @@
 class Solution {
-    fun lengthOfLastWord(s: String): Int {
-        var pointer = s.length - 1
+    fun countAndSay(n: Int): String {
+        if (n == 1) return "1"
 
-        while(s[pointer] == ' ') {
-            pointer -= 1
-            if(pointer < 0) break
+        var result = "1"
+
+        for (i in 2..n) {
+            result = getNextSequence(result)
         }
 
-        val endPointer = pointer
+        return result
+    }
 
-        while(s[pointer] != ' '){
-            pointer -=1
-            if(pointer < 0) break
+    private fun getNextSequence(s: String): String {
+        val sb = StringBuilder()
+        var count = 1
+
+        for (i in 1 until s.length) {
+            if (s[i] == s[i - 1]) {
+                count++
+            } else {
+                sb.append(count).append(s[i - 1])
+                count = 1
+            }
         }
 
-        val startPointer = pointer
+        // Добавляем последнюю группу
+        sb.append(count).append(s.last())
 
-        return endPointer - startPointer
+        return sb.toString()
     }
 }
