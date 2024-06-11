@@ -1,6 +1,8 @@
 fun main() {
     val solution = Solution()
-    println(solution.countAndSay(1)) // Output: "1"
-    println(solution.countAndSay(4)) // Output: "1211"
-    println(solution.countAndSay(5)) // Output: "111221"
+    val nums1 = intArrayOf(1, 2, 3)
+    println(solution.subsets(nums1)) // Output: [[], [1], [2], [1, 2], [3], [1, 3], [2, 3], [1, 2, 3]]
+
+    val nums2 = intArrayOf(0)
+    println(solution.subsets(nums2)) // Output: [[], [0]]
 }

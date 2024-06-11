@@ -1,32 +1,22 @@
+
 class Solution {
-    fun countAndSay(n: Int): String {
-        if (n == 1) return "1"
-
-        var result = "1"
-
-        for (i in 2..n) {
-            result = getNextSequence(result)
-        }
-
+    fun subsets(nums: IntArray): List<List<Int>> {
+        val result = mutableListOf<List<Int>>()
+        generateSubsets(0, nums, mutableListOf(), result)
         return result
     }
 
-    private fun getNextSequence(s: String): String {
-        val sb = StringBuilder()
-        var count = 1
+    private fun generateSubsets(index: Int, nums: IntArray, current: MutableList<Int>, result: MutableList<List<Int>>) {
+        // Добавляем текущий набор в результат
+        result.add(ArrayList(current))
 
-        for (i in 1 until s.length) {
-            if (s[i] == s[i - 1]) {
-                count++
-            } else {
-                sb.append(count).append(s[i - 1])
-                count = 1
-            }
+        for (i in index until nums.size) {
+            // Добавляем элемент nums[i] в текущее подмножество
+            current.add(nums[i])
+            // Рекурсивно вызываем для следующего индекса
+            generateSubsets(i + 1, nums, current, result)
+            // Убираем последний элемент для возврата к предыдущему состоянию
+            current.removeAt(current.size - 1)
         }
-
-        // Добавляем последнюю группу
-        sb.append(count).append(s.last())
-
-        return sb.toString()
     }
 }
