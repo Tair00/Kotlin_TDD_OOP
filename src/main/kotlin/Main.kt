@@ -1,8 +1,12 @@
 fun main() {
     val solution = Solution()
-    val nums1 = intArrayOf(1, 2, 3)
-    println(solution.subsets(nums1)) // Output: [[], [1], [2], [1, 2], [3], [1, 3], [2, 3], [1, 2, 3]]
 
-    val nums2 = intArrayOf(0)
-    println(solution.subsets(nums2)) // Output: [[], [0]]
+    val digits1 = intArrayOf(1, 2, 3)
+    println(solution.plusOne(digits1).contentToString()) // Output: [1, 2, 4]
+
+    val digits2 = intArrayOf(4, 3, 2, 1)
+    println(solution.plusOne(digits2).contentToString()) // Output: [4, 3, 2, 2]
+
+    val digits3 = intArrayOf(9)
+    println(solution.plusOne(digits3).contentToString()) // Output: [1, 0]
 }
