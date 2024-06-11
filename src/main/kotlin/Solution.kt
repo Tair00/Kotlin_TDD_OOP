@@ -1,17 +1,22 @@
 class Solution {
-    fun plusOne(digits: IntArray): IntArray {
-        val n = digits.size
+    fun mySqrt(x: Int): Int {
+        if (x == 0) return 0
+        if (x == 1) return 1
 
-        for (i in n - 1 downTo 0) {
-            if (digits[i] < 9) {
-                digits[i]++
-                return digits
+        var left = 1
+        var right = x
+        var result = 0
+
+        while (left <= right) {
+            val mid = left + (right - left) / 2
+            if (mid <= x / mid) {
+                result = mid
+                left = mid + 1
+            } else {
+                right = mid - 1
             }
-            digits[i] = 0
         }
 
-        val result = IntArray(n + 1)
-        result[0] = 1
         return result
     }
 }
