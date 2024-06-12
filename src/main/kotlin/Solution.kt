@@ -1,22 +1,29 @@
 class Solution {
-    fun mySqrt(x: Int): Int {
-        if (x == 0) return 0
-        if (x == 1) return 1
+    fun combinationSum(candidates: IntArray, target: Int): List<List<Int>> {
+        val result = mutableListOf<List<Int>>()
+        candidates.sort() // Опционально, для оптимизации
+        findCombinations(candidates, target, 0, mutableListOf(), result)
+        return result
+    }
 
-        var left = 1
-        var right = x
-        var result = 0
-
-        while (left <= right) {
-            val mid = left + (right - left) / 2
-            if (mid <= x / mid) {
-                result = mid
-                left = mid + 1
-            } else {
-                right = mid - 1
-            }
+    private fun findCombinations(
+        candidates: IntArray,
+        target: Int,
+        start: Int,
+        currentCombination: MutableList<Int>,
+        result: MutableList<List<Int>>
+    ) {
+        if (target == 0) {
+            result.add(ArrayList(currentCombination)) // Найдено корректное решение
+            return
         }
 
-        return result
+        for (i in start until candidates.size) {
+            if (candidates[i] > target) break // Оптимизация: если число больше цели, нет смысла продолжать
+
+            currentCombination.add(candidates[i])
+            findCombinations(candidates, target - candidates[i], i, currentCombination, result)
+            currentCombination.removeAt(currentCombination.size - 1) // Возврат к предыдущему состоянию
+        }
     }
 }
