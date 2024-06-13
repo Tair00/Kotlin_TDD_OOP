@@ -1,9 +1,15 @@
 fun main() {
     val solution = Solution()
 
-    val candidates1 = intArrayOf(2, 3, 6, 7)
-    val target1 = 7
-    val result1 = solution.combinationSum(candidates1, target1)
-    println("Комбинации для ${candidates1.contentToString()} и цели $target1: $result1")
+    val seats1 = intArrayOf(3, 1, 5)
+    val students1 = intArrayOf(2, 7, 4)
+    println("Минимальное количество шагов: " + solution.minMovesToSeat(seats1, students1))  // Ожидается: 4
 
+    val seats2 = intArrayOf(4, 1, 5, 9)
+    val students2 = intArrayOf(1, 3, 2, 6)
+    println("Минимальное количество шагов: " + solution.minMovesToSeat(seats2, students2))  // Ожидается: 7
+
+    val seats3 = intArrayOf(2, 2, 6, 6)
+    val students3 = intArrayOf(1, 3, 2, 6)
+    println("Минимальное количество шагов: " + solution.minMovesToSeat(seats3, students3))  // Ожидается: 4
 }
