@@ -1,17 +1,22 @@
 class Solution {
-    fun minMovesToSeat(seats: IntArray, students: IntArray): Int {
+    fun minIncrementForUnique(nums: IntArray): Int {
 
-        seats.sort()
-        students.sort()
-
-
-        var totalMoves = 0
+        nums.sort()
 
 
-        for (i in seats.indices) {
-            totalMoves += Math.abs(seats[i] - students[i])
+        var moves = 0
+        var prev = nums[0]
+
+
+        for (i in 1 until nums.size) {
+            if (nums[i] <= prev) {
+                moves += (prev + 1) - nums[i]
+                prev += 1
+            } else {
+                prev = nums[i]
+            }
         }
 
-        return totalMoves
+        return moves
     }
 }
