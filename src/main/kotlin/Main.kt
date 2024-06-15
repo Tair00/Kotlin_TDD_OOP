@@ -1,9 +1,10 @@
 fun main() {
     val solution = Solution()
 
-    val nums1 = intArrayOf(1, 2, 2)
-    println("Минимальное количество ходов: " + solution.minIncrementForUnique(nums1))  // Ожидается: 1
-
-    val nums2 = intArrayOf(3, 2, 1, 2, 1, 7)
-    println("Минимальное количество ходов: " + solution.minIncrementForUnique(nums2))  // Ожидается: 6
+    val k1 = 2
+    val w1 = 0
+    val profits1 = intArrayOf(1, 2, 3)
+    val capital1 = intArrayOf(0, 1, 1)
+    val result1 = solution.findMaximizedCapital(k1, w1, profits1, capital1)
+    println(result1)
 }

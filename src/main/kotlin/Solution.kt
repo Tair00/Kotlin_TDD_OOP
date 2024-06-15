@@ -1,22 +1,36 @@
+import java.util.*
+
 class Solution {
-    fun minIncrementForUnique(nums: IntArray): Int {
+    fun findMaximizedCapital(k: Int, w: Int, profits: IntArray, capital: IntArray): Int {
 
-        nums.sort()
+        val minCapitalQueue = PriorityQueue<Pair<Int, Int>>(compareBy { it.first })
 
-
-        var moves = 0
-        var prev = nums[0]
+        val maxProfitQueue = PriorityQueue<Pair<Int, Int>>(compareByDescending { it.second })
 
 
-        for (i in 1 until nums.size) {
-            if (nums[i] <= prev) {
-                moves += (prev + 1) - nums[i]
-                prev += 1
-            } else {
-                prev = nums[i]
-            }
+        for (i in profits.indices) {
+            minCapitalQueue.offer(Pair(capital[i], profits[i]))
         }
 
-        return moves
+        var availableCapital = w
+        var projectsCompleted = 0
+
+        while (projectsCompleted < k) {
+
+            while (minCapitalQueue.isNotEmpty() && minCapitalQueue.peek().first <= availableCapital) {
+                val project = minCapitalQueue.poll()
+                maxProfitQueue.offer(project)
+            }
+
+
+            if (maxProfitQueue.isEmpty()) break
+
+
+            val bestProject = maxProfitQueue.poll()
+            availableCapital += bestProject.second
+            projectsCompleted++
+        }
+
+        return availableCapital
     }
 }
