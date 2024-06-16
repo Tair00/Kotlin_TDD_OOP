@@ -1,10 +1,10 @@
 fun main() {
     val solution = Solution()
+    val nums1 = intArrayOf(1, 3)
+    val n1 = 6
+    println(solution.minPatches(nums1, n1))
 
-    val k1 = 2
-    val w1 = 0
-    val profits1 = intArrayOf(1, 2, 3)
-    val capital1 = intArrayOf(0, 1, 1)
-    val result1 = solution.findMaximizedCapital(k1, w1, profits1, capital1)
-    println(result1)
+    val nums2 = intArrayOf(1, 5, 10)
+    val n2 = 20
+    println(solution.minPatches(nums2, n2))
 }
