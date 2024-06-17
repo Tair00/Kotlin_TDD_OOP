@@ -1,19 +1,16 @@
 class Solution {
-    fun minPatches(nums: IntArray, n: Int): Int {
-        var patches = 0
-        var currentRange = 1L
-        var i = 0
-
-        while (currentRange <= n) {
-            if (i < nums.size && nums[i] <= currentRange) {
-                currentRange += nums[i]
-                i++
-            } else {
-                currentRange += currentRange
-                patches++
+    fun judgeSquareSum(c: Int): Boolean {
+        for (a in 0..Math.sqrt(c.toDouble()).toInt()) {
+            val b = c - a * a
+            if (isPerfectSquare(b)) {
+                return true
             }
         }
+        return false
+    }
 
-        return patches
+    private fun isPerfectSquare(num: Int): Boolean {
+        val root = Math.sqrt(num.toDouble()).toInt()
+        return root * root == num
     }
 }
