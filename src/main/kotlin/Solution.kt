@@ -1,16 +1,25 @@
 class Solution {
-    fun judgeSquareSum(c: Int): Boolean {
-        for (a in 0..Math.sqrt(c.toDouble()).toInt()) {
-            val b = c - a * a
-            if (isPerfectSquare(b)) {
-                return true
+    fun minKBitFlips(nums: IntArray, k: Int): Int {
+        val n = nums.size
+        val flipIndicator = IntArray(n)
+        var flips = 0
+        var flipCount = 0
+
+        for (i in nums.indices) {
+            if (i >= k) {
+                flipCount = flipCount xor flipIndicator[i - k]
+            }
+
+            if (flipCount % 2 == nums[i]) {
+                if (i + k > n) {
+                    return -1
+                }
+
+                flips++
+                flipCount = flipCount xor 1
+                flipIndicator[i] = 1
             }
         }
-        return false
-    }
-
-    private fun isPerfectSquare(num: Int): Boolean {
-        val root = Math.sqrt(num.toDouble()).toInt()
-        return root * root == num
+        return flips
     }
 }

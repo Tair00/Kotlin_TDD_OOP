@@ -1,7 +1,7 @@
 fun main() {
     val solution = Solution()
 
-    println(solution.judgeSquareSum(5))
-    println(solution.judgeSquareSum(3))
-    println(solution.judgeSquareSum(2147483600))
+    println(solution.minKBitFlips(intArrayOf(0, 1, 0), 1))  // Output: 2
+    println(solution.minKBitFlips(intArrayOf(1, 1, 0), 2))  // Output: -1
+    println(solution.minKBitFlips(intArrayOf(0, 0, 0, 1, 0, 1, 1, 0), 3))  // Output: 3
 }
