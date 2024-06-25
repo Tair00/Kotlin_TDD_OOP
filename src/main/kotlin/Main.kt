@@ -1,7 +1,33 @@
 fun main() {
-    val solution = Solution()
 
-    println(solution.minKBitFlips(intArrayOf(0, 1, 0), 1))  // Output: 2
-    println(solution.minKBitFlips(intArrayOf(1, 1, 0), 2))  // Output: -1
-    println(solution.minKBitFlips(intArrayOf(0, 0, 0, 1, 0, 1, 1, 0), 3))  // Output: 3
+    val root = TreeNode(4).apply {
+        left = TreeNode(1).apply {
+            left = TreeNode(0)
+            right = TreeNode(2).apply {
+                right = TreeNode(3)
+            }
+        }
+        right = TreeNode(6).apply {
+            left = TreeNode(5)
+            right = TreeNode(7).apply {
+                right = TreeNode(8)
+            }
+        }
+    }
+
+
+    val solution = Solution()
+    val gstRoot = solution.bstToGst(root)
+
+
+    fun printInOrder(node: TreeNode?) {
+        if (node == null) return
+        printInOrder(node.left)
+        print("${node.`val`} ")
+        printInOrder(node.right)
+    }
+
+
+    printInOrder(gstRoot)
+    println()
 }
