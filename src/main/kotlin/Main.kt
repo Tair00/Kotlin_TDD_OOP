@@ -1,23 +1,16 @@
+// Example usage:
 fun main() {
 
-    val root = TreeNode(4).apply {
-        left = TreeNode(1).apply {
-            left = TreeNode(0)
-            right = TreeNode(2).apply {
-                right = TreeNode(3)
-            }
-        }
-        right = TreeNode(6).apply {
-            left = TreeNode(5)
-            right = TreeNode(7).apply {
-                right = TreeNode(8)
+    val root = TreeNode(1).apply {
+        right = TreeNode(2).apply {
+            right = TreeNode(3).apply {
+                right = TreeNode(4)
             }
         }
     }
 
-
     val solution = Solution()
-    val gstRoot = solution.bstToGst(root)
+    val balancedRoot = solution.balanceBST(root)
 
 
     fun printInOrder(node: TreeNode?) {
@@ -27,7 +20,6 @@ fun main() {
         printInOrder(node.right)
     }
 
-
-    printInOrder(gstRoot)
+    printInOrder(balancedRoot)
     println()
 }

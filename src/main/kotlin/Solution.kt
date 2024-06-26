@@ -4,22 +4,30 @@ class TreeNode(var `val`: Int) {
 }
 
 class Solution {
-    fun bstToGst(root: TreeNode?): TreeNode? {
-        var sum = 0
+    fun balanceBST(root: TreeNode?): TreeNode? {
+        val values = mutableListOf<Int>()
 
 
-        fun reverseInOrder(node: TreeNode?) {
+        fun inOrderTraversal(node: TreeNode?) {
             if (node == null) return
-
-            reverseInOrder(node.right)
-
-            sum += node.`val`
-            node.`val` = sum
-
-            reverseInOrder(node.left)
+            inOrderTraversal(node.left)
+            values.add(node.`val`)
+            inOrderTraversal(node.right)
         }
 
-        reverseInOrder(root)
-        return root
+
+        fun buildBalancedBST(start: Int, end: Int): TreeNode? {
+            if (start > end) return null
+            val mid = start + (end - start) / 2
+            val node = TreeNode(values[mid])
+            node.left = buildBalancedBST(start, mid - 1)
+            node.right = buildBalancedBST(mid + 1, end)
+            return node
+        }
+
+
+        inOrderTraversal(root)
+
+        return buildBalancedBST(0, values.size - 1)
     }
 }
