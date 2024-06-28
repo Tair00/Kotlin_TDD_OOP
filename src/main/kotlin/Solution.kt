@@ -1,33 +1,24 @@
-class TreeNode(var `val`: Int) {
-    var left: TreeNode? = null
-    var right: TreeNode? = null
-}
-
 class Solution {
-    fun balanceBST(root: TreeNode?): TreeNode? {
-        val values = mutableListOf<Int>()
+    fun maximumImportance(n: Int, roads: Array<IntArray>): Long {
 
-
-        fun inOrderTraversal(node: TreeNode?) {
-            if (node == null) return
-            inOrderTraversal(node.left)
-            values.add(node.`val`)
-            inOrderTraversal(node.right)
+        val degree = IntArray(n)
+        for (road in roads) {
+            degree[road[0]]++
+            degree[road[1]]++
         }
 
+        val cities = degree.indices.sortedByDescending { degree[it] }
 
-        fun buildBalancedBST(start: Int, end: Int): TreeNode? {
-            if (start > end) return null
-            val mid = start + (end - start) / 2
-            val node = TreeNode(values[mid])
-            node.left = buildBalancedBST(start, mid - 1)
-            node.right = buildBalancedBST(mid + 1, end)
-            return node
+        val values = IntArray(n)
+        for (i in cities.indices) {
+            values[cities[i]] = n - i
         }
 
+        var totalImportance = 0L
+        for (road in roads) {
+            totalImportance += (values[road[0]] + values[road[1]]).toLong()
+        }
 
-        inOrderTraversal(root)
-
-        return buildBalancedBST(0, values.size - 1)
+        return totalImportance
     }
 }
