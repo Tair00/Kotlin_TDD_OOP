@@ -1,24 +1,29 @@
 class Solution {
-    fun maximumImportance(n: Int, roads: Array<IntArray>): Long {
-
-        val degree = IntArray(n)
-        for (road in roads) {
-            degree[road[0]]++
-            degree[road[1]]++
+    fun getAncestors(n: Int, edges: Array<IntArray>): List<List<Int>> {
+        val graph = Array(n) { mutableListOf<Int>() }
+        for (edge in edges) {
+            graph[edge[0]].add(edge[1])
         }
 
-        val cities = degree.indices.sortedByDescending { degree[it] }
+        // Шаг 2: Создание массива для хранения предков
+        val ancestors = Array(n) { mutableSetOf<Int>() }
 
-        val values = IntArray(n)
-        for (i in cities.indices) {
-            values[cities[i]] = n - i
+        // Шаг 3: Выполнение DFS для каждого узла
+        fun dfs(node: Int, currentAncestor: Int) {
+            for (neighbor in graph[node]) {
+                if (ancestors[neighbor].add(currentAncestor)) {
+                    dfs(neighbor, currentAncestor)
+                }
+            }
         }
 
-        var totalImportance = 0L
-        for (road in roads) {
-            totalImportance += (values[road[0]] + values[road[1]]).toLong()
+        // Запуск DFS для каждого узла
+        for (i in 0 until n) {
+            dfs(i, i)
         }
 
-        return totalImportance
+        // Шаг 4: Сортировка списка предков для каждого узла
+        return ancestors.map { it.sorted() }
     }
 }
+
