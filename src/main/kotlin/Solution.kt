@@ -1,29 +1,66 @@
 class Solution {
-    fun getAncestors(n: Int, edges: Array<IntArray>): List<List<Int>> {
-        val graph = Array(n) { mutableListOf<Int>() }
-        for (edge in edges) {
-            graph[edge[0]].add(edge[1])
+    private class UnionFind(val size: Int) {
+        private val parent = IntArray(size) { it }
+        private val rank = IntArray(size) { 1 }
+
+        fun find(x: Int): Int {
+            if (parent[x] != x) {
+                parent[x] = find(parent[x])
+            }
+            return parent[x]
         }
 
-        // Шаг 2: Создание массива для хранения предков
-        val ancestors = Array(n) { mutableSetOf<Int>() }
+        fun union(x: Int, y: Int): Boolean {
+            val rootX = find(x)
+            val rootY = find(y)
+            if (rootX != rootY) {
+                if (rank[rootX] > rank[rootY]) {
+                    parent[rootY] = rootX
+                } else if (rank[rootX] < rank[rootY]) {
+                    parent[rootX] = rootY
+                } else {
+                    parent[rootY] = rootX
+                    rank[rootX]++
+                }
+                return true
+            }
+            return false
+        }
 
-        // Шаг 3: Выполнение DFS для каждого узла
-        fun dfs(node: Int, currentAncestor: Int) {
-            for (neighbor in graph[node]) {
-                if (ancestors[neighbor].add(currentAncestor)) {
-                    dfs(neighbor, currentAncestor)
+        fun isConnected(): Boolean {
+            val root = find(0)
+            for (i in 1 until size) {
+                if (find(i) != root) return false
+            }
+            return true
+        }
+    }
+
+    fun maxNumEdgesToRemove(n: Int, edges: Array<IntArray>): Int {
+        val ufAlice = UnionFind(n)
+        val ufBob = UnionFind(n)
+        var edgesUsed = 0
+
+        for (edge in edges) {
+            if (edge[0] == 3) {
+                if (ufAlice.union(edge[1] - 1, edge[2] - 1)) {
+                    ufBob.union(edge[1] - 1, edge[2] - 1)
+                    edgesUsed++
                 }
             }
         }
 
-        // Запуск DFS для каждого узла
-        for (i in 0 until n) {
-            dfs(i, i)
+        for (edge in edges) {
+            when (edge[0]) {
+                1 -> if (ufAlice.union(edge[1] - 1, edge[2] - 1)) edgesUsed++
+                2 -> if (ufBob.union(edge[1] - 1, edge[2] - 1)) edgesUsed++
+            }
         }
 
-        // Шаг 4: Сортировка списка предков для каждого узла
-        return ancestors.map { it.sorted() }
+
+        if (ufAlice.isConnected() && ufBob.isConnected()) {
+            return edges.size - edgesUsed
+        }
+        return -1
     }
 }
-
