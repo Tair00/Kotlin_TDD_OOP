@@ -1,12 +1,12 @@
 fun main() {
     val solution = Solution()
+    val nums1 = intArrayOf(1, 2, 2, 1)
+    val nums2 = intArrayOf(2, 2)
+    val result = solution.intersect(nums1, nums2)
+    println(result.joinToString(", "))  // Output: [2, 2]
 
-    val testCase1 = intArrayOf(2, 6, 4, 1)
-    val result1 = solution.threeConsecutiveOdds(testCase1)
-    println("Test Case 1: $result1")  // Output: false
-
-    val testCase2 = intArrayOf(1, 2, 34, 3, 4, 5, 7, 23, 12)
-    val result2 = solution.threeConsecutiveOdds(testCase2)
-    println("Test Case 2: $result2")  // Output: true
-
+    val nums3 = intArrayOf(4, 9, 5)
+    val nums4 = intArrayOf(9, 4, 9, 8, 4)
+    val result2 = solution.intersect(nums3, nums4)
+    println(result2.joinToString(", "))  // Output: [4, 9]
 }
