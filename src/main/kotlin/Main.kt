@@ -1,12 +1,12 @@
 fun main() {
     val solution = Solution()
-    val nums1 = intArrayOf(1, 2, 2, 1)
-    val nums2 = intArrayOf(2, 2)
-    val result = solution.intersect(nums1, nums2)
-    println(result.joinToString(", "))  // Output: [2, 2]
 
-    val nums3 = intArrayOf(4, 9, 5)
-    val nums4 = intArrayOf(9, 4, 9, 8, 4)
-    val result2 = solution.intersect(nums3, nums4)
-    println(result2.joinToString(", "))  // Output: [4, 9]
+    val nums1 = intArrayOf(5, 3, 2, 4)
+    println(solution.minDifference(nums1))  // Output: 0
+
+    val nums2 = intArrayOf(1, 5, 0, 10, 14)
+    println(solution.minDifference(nums2))  // Output: 1
+
+    val nums3 = intArrayOf(3, 100, 20)
+    println(solution.minDifference(nums3))  // Output: 0
 }

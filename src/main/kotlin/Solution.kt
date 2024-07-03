@@ -1,20 +1,17 @@
 class Solution {
-    fun intersect(nums1: IntArray, nums2: IntArray): IntArray {
-        val counts = mutableMapOf<Int, Int>()
-        val result = mutableListOf<Int>()
+    fun minDifference(nums: IntArray): Int {
+        if (nums.size <= 4) return 0
 
-        for (num in nums1) {
-            counts[num] = counts.getOrDefault(num, 0) + 1
-        }
+        nums.sort()
+
+        var minDifference = Int.MAX_VALUE
+        val n = nums.size
 
 
-        for (num in nums2) {
-            if (counts.getOrDefault(num, 0) > 0) {
-                result.add(num)
-                counts[num] = counts[num]!! - 1
-            }
-        }
-
-        return result.toIntArray()
+        minDifference = minOf(minDifference, nums[n - 1] - nums[3])
+        minDifference = minOf(minDifference, nums[n - 2] - nums[2])
+        minDifference = minOf(minDifference, nums[n - 3] - nums[1])
+        minDifference = minOf(minDifference, nums[n - 4] - nums[0])
+        return minDifference
     }
 }
