@@ -1,12 +1,20 @@
 fun main() {
+    val head = ListNode(0)
+    head.next = ListNode(3)
+    head.next?.next = ListNode(1)
+    head.next?.next?.next = ListNode(0)
+    head.next?.next?.next?.next = ListNode(4)
+    head.next?.next?.next?.next?.next = ListNode(5)
+    head.next?.next?.next?.next?.next?.next = ListNode(2)
+    head.next?.next?.next?.next?.next?.next?.next = ListNode(0)
+
     val solution = Solution()
+    val result = solution.mergeNodes(head)
 
-    val nums1 = intArrayOf(5, 3, 2, 4)
-    println(solution.minDifference(nums1))  // Output: 0
 
-    val nums2 = intArrayOf(1, 5, 0, 10, 14)
-    println(solution.minDifference(nums2))  // Output: 1
-
-    val nums3 = intArrayOf(3, 100, 20)
-    println(solution.minDifference(nums3))  // Output: 0
+    var current = result
+    while (current != null) {
+        print("${current.`val`} ")
+        current = current.next
+    }
 }

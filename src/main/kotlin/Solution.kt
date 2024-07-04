@@ -1,17 +1,28 @@
+
+class ListNode(var `val`: Int) {
+    var next: ListNode? = null
+}
+
 class Solution {
-    fun minDifference(nums: IntArray): Int {
-        if (nums.size <= 4) return 0
+    fun mergeNodes(head: ListNode?): ListNode? {
+        var current = head?.next
+        val dummy = ListNode(0)
+        var tail = dummy
 
-        nums.sort()
+        var sum = 0
 
-        var minDifference = Int.MAX_VALUE
-        val n = nums.size
+        while (current != null) {
+            if (current.`val` == 0) {
+                tail.next = ListNode(sum)
+                tail = tail.next!!
+                sum = 0
+            } else {
 
+                sum += current.`val`
+            }
+            current = current.next
+        }
 
-        minDifference = minOf(minDifference, nums[n - 1] - nums[3])
-        minDifference = minOf(minDifference, nums[n - 2] - nums[2])
-        minDifference = minOf(minDifference, nums[n - 3] - nums[1])
-        minDifference = minOf(minDifference, nums[n - 4] - nums[0])
-        return minDifference
+        return dummy.next
     }
 }
