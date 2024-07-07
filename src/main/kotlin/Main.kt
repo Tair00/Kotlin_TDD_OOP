@@ -1,5 +1,5 @@
 fun main() {
     val solution = Solution()
-    println(solution.passThePillow(4, 5)) // Output: 2
-    println(solution.passThePillow(3, 2)) // Output: 3
+    println(solution.numWaterBottles(9, 3))  // Output: 13
+    println(solution.numWaterBottles(15, 4)) // Output: 19
 }

@@ -1,16 +1,19 @@
 class Solution {
-    fun passThePillow(n: Int, time: Int): Int {
+    fun numWaterBottles(numBottles: Int, numExchange: Int): Int {
+        var totalDrinks = 0
+        var emptyBottles = 0
+        var fullBottles = numBottles
 
-        val fullCycles = time / (n - 1)
-        val remainingTime = time % (n - 1)
+        while (fullBottles > 0) {
+            // Drink all current full bottles
+            totalDrinks += fullBottles
+            emptyBottles += fullBottles
 
+            // Exchange empty bottles for full ones
+            fullBottles = emptyBottles / numExchange
+            emptyBottles = emptyBottles % numExchange
+        }
 
-        val direction = if (fullCycles % 2 == 0) 1 else -1
-
-
-        val initialPosition = if (direction == 1) 1 else n
-
-
-        return initialPosition + direction * remainingTime
+        return totalDrinks
     }
 }
