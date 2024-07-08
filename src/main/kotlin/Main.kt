@@ -1,5 +1,5 @@
 fun main() {
     val solution = Solution()
-    println(solution.numWaterBottles(9, 3))  // Output: 13
-    println(solution.numWaterBottles(15, 4)) // Output: 19
+    println(solution.findTheWinner(9, 3))
+    println(solution.findTheWinner(15, 4))
 }
