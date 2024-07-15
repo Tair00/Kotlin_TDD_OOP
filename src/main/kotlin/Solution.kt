@@ -1,50 +1,45 @@
+class TreeNode(var `val`: Int) {
+    var left: TreeNode? = null
+    var right: TreeNode? = null
+}
+
 class Solution {
-    fun countOfAtoms(formula: String): String {
-        val stack = mutableListOf<MutableMap<String, Int>>()
-        var i = 0
-        val n = formula.length
-        var currentMap = mutableMapOf<String, Int>()
+    fun createBinaryTree(descriptions: Array<IntArray>): TreeNode? {
+        // Создаем карту для хранения узлов по их значениям
+        val nodeMap = mutableMapOf<Int, TreeNode>()
+        // Создаем множество для хранения всех детей
+        val childrenSet = mutableSetOf<Int>()
 
-        while (i < n) {
-            when (formula[i]) {
-                '(' -> {
-                    stack.add(currentMap)
-                    currentMap = mutableMapOf()
-                    i++
-                }
-                ')' -> {
-                    val tempMap = currentMap
-                    currentMap = stack.removeAt(stack.size - 1)
-                    i++
-                    var start = i
-                    while (i < n && formula[i].isDigit()) i++
-                    val count = if (start < i) formula.substring(start, i).toInt() else 1
-                    for ((key, value) in tempMap) {
-                        currentMap[key] = currentMap.getOrDefault(key, 0) + value * count
-                    }
-                }
-                else -> {
-                    var start = i
-                    i++
-                    while (i < n && formula[i].isLowerCase()) i++
-                    val name = formula.substring(start, i)
-                    start = i
-                    while (i < n && formula[i].isDigit()) i++
-                    val count = if (start < i) formula.substring(start, i).toInt() else 1
-                    currentMap[name] = currentMap.getOrDefault(name, 0) + count
-                }
+        // Проходим по всем описаниям и создаем узлы
+        for (desc in descriptions) {
+            val parentVal = desc[0]
+            val childVal = desc[1]
+            val isLeft = desc[2] == 1
+
+            // Получаем или создаем узлы для родителя и ребенка
+            val parentNode = nodeMap.getOrPut(parentVal) { TreeNode(parentVal) }
+            val childNode = nodeMap.getOrPut(childVal) { TreeNode(childVal) }
+
+            // Устанавливаем связи между родителем и ребенком
+            if (isLeft) {
+                parentNode.left = childNode
+            } else {
+                parentNode.right = childNode
+            }
+
+            // Добавляем ребенка в множество детей
+            childrenSet.add(childVal)
+        }
+
+        // Находим корневой узел, который не является ребенком ни одного узла
+        var root: TreeNode? = null
+        for ((key, _) in nodeMap) {
+            if (!childrenSet.contains(key)) {
+                root = nodeMap[key]
+                break
             }
         }
 
-        val result = StringBuilder()
-        val sortedKeys = currentMap.keys.sorted()
-        for (key in sortedKeys) {
-            result.append(key)
-            if (currentMap[key]!! > 1) {
-                result.append(currentMap[key])
-            }
-        }
-
-        return result.toString()
+        return root
     }
 }
