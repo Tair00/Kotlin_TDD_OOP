@@ -3,47 +3,25 @@ class TreeNode(var `val`: Int) {
     var right: TreeNode? = null
 }
 class Solution {
-    fun getDirections(root: TreeNode?, startValue: Int, destValue: Int): String {
-        val pathToStart = mutableListOf<Char>()
-        val pathToDest = mutableListOf<Char>()
+    fun delNodes(root: TreeNode?, to_delete: IntArray): List<TreeNode?> {
+        val toDeleteSet = to_delete.toSet()
+        val result = mutableListOf<TreeNode?>()
 
-        // Helper function to find the path from root to a given node value
-        fun findPath(node: TreeNode?, value: Int, path: MutableList<Char>): Boolean {
-            if (node == null) return false
-            if (node.`val` == value) return true
+        fun helper(node: TreeNode?, isRoot: Boolean): TreeNode? {
+            if (node == null) return null
 
-            path.add('L')
-            if (findPath(node.left, value, path)) return true
-            path.removeAt(path.size - 1)
+            val deleted = node.`val` in toDeleteSet
+            if (isRoot && !deleted) {
+                result.add(node)
+            }
 
-            path.add('R')
-            if (findPath(node.right, value, path)) return true
-            path.removeAt(path.size - 1)
+            node.left = helper(node.left, deleted)
+            node.right = helper(node.right, deleted)
 
-            return false
+            return if (deleted) null else node
         }
 
-        // Find paths from root to startValue and destValue
-        findPath(root, startValue, pathToStart)
-        findPath(root, destValue, pathToDest)
-
-        // Find the common part of the paths (LCA part)
-        var i = 0
-        while (i < pathToStart.size && i < pathToDest.size && pathToStart[i] == pathToDest[i]) {
-            i++
-        }
-
-        // The remaining part of pathToStart needs to be converted to 'U's
-        val result = StringBuilder()
-        for (j in i until pathToStart.size) {
-            result.append('U')
-        }
-
-        // Add the remaining part of pathToDest
-        for (j in i until pathToDest.size) {
-            result.append(pathToDest[j])
-        }
-
-        return result.toString()
+        helper(root, true)
+        return result
     }
 }
