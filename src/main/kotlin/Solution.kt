@@ -2,26 +2,38 @@ class TreeNode(var `val`: Int) {
     var left: TreeNode? = null
     var right: TreeNode? = null
 }
+
 class Solution {
-    fun delNodes(root: TreeNode?, to_delete: IntArray): List<TreeNode?> {
-        val toDeleteSet = to_delete.toSet()
-        val result = mutableListOf<TreeNode?>()
+    fun countPairs(root: TreeNode?, distance: Int): Int {
+        var count = 0
 
-        fun helper(node: TreeNode?, isRoot: Boolean): TreeNode? {
-            if (node == null) return null
+        fun dfs(node: TreeNode?): List<Int> {
+            if (node == null) return listOf()
+            if (node.left == null && node.right == null) return listOf(1)
 
-            val deleted = node.`val` in toDeleteSet
-            if (isRoot && !deleted) {
-                result.add(node)
+            val leftDistances = dfs(node.left)
+            val rightDistances = dfs(node.right)
+
+            for (ld in leftDistances) {
+                for (rd in rightDistances) {
+                    if (ld + rd <= distance) {
+                        count++
+                    }
+                }
             }
 
-            node.left = helper(node.left, deleted)
-            node.right = helper(node.right, deleted)
+            val currentDistances = mutableListOf<Int>()
+            for (ld in leftDistances) {
+                currentDistances.add(ld + 1)
+            }
+            for (rd in rightDistances) {
+                currentDistances.add(rd + 1)
+            }
 
-            return if (deleted) null else node
+            return currentDistances
         }
 
-        helper(root, true)
-        return result
+        dfs(root)
+        return count
     }
 }
