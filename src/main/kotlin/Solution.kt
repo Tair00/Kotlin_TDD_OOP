@@ -1,39 +1,31 @@
-class TreeNode(var `val`: Int) {
-    var left: TreeNode? = null
-    var right: TreeNode? = null
-}
-
 class Solution {
-    fun countPairs(root: TreeNode?, distance: Int): Int {
-        var count = 0
+    fun luckyNumbers(matrix: Array<IntArray>): List<Int> {
+        val luckyNumbers = mutableListOf<Int>()
 
-        fun dfs(node: TreeNode?): List<Int> {
-            if (node == null) return listOf()
-            if (node.left == null && node.right == null) return listOf(1)
-
-            val leftDistances = dfs(node.left)
-            val rightDistances = dfs(node.right)
-
-            for (ld in leftDistances) {
-                for (rd in rightDistances) {
-                    if (ld + rd <= distance) {
-                        count++
-                    }
+        for (i in matrix.indices) {
+            val row = matrix[i]
+            var minInRow = row[0]
+            var minIndex = 0
+            for (j in row.indices) {
+                if (row[j] < minInRow) {
+                    minInRow = row[j]
+                    minIndex = j
                 }
             }
 
-            val currentDistances = mutableListOf<Int>()
-            for (ld in leftDistances) {
-                currentDistances.add(ld + 1)
-            }
-            for (rd in rightDistances) {
-                currentDistances.add(rd + 1)
+            var isMaxInCol = true
+            for (k in matrix.indices) {
+                if (matrix[k][minIndex] > minInRow) {
+                    isMaxInCol = false
+                    break
+                }
             }
 
-            return currentDistances
+            if (isMaxInCol) {
+                luckyNumbers.add(minInRow)
+            }
         }
 
-        dfs(root)
-        return count
+        return luckyNumbers
     }
 }
