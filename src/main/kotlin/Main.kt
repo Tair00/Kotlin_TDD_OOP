@@ -1,24 +1,27 @@
 fun main() {
     val solution = Solution()
 
-    val matrix1 = arrayOf(
-        intArrayOf(3, 7, 8),
-        intArrayOf(9, 11, 13),
-        intArrayOf(15, 16, 17)
-    )
+    val rowSum1 = intArrayOf(3, 8)
+    val colSum1 = intArrayOf(4, 7)
+    val matrix1 = solution.restoreMatrix(rowSum1, colSum1)
+    println("Матрица для rowSum1 и colSum1:")
+    for (row in matrix1) {
+        println(row.joinToString(", "))
+    }
 
-    val matrix2 = arrayOf(
-        intArrayOf(1, 10, 4, 2),
-        intArrayOf(9, 3, 8, 7),
-        intArrayOf(15, 16, 17, 12)
-    )
+    val rowSum2 = intArrayOf(5, 7, 10)
+    val colSum2 = intArrayOf(8, 6, 8)
+    val matrix2 = solution.restoreMatrix(rowSum2, colSum2)
+    println("\nМатрица для rowSum2 и colSum2:")
+    for (row in matrix2) {
+        println(row.joinToString(", "))
+    }
 
-    val matrix3 = arrayOf(
-        intArrayOf(7, 8),
-        intArrayOf(1, 2)
-    )
-
-    println(solution.luckyNumbers(matrix1)) // Output: [15]
-    println(solution.luckyNumbers(matrix2)) // Output: [12]
-    println(solution.luckyNumbers(matrix3)) // Output: [7]
+    val rowSum3 = intArrayOf(14, 9, 4)
+    val colSum3 = intArrayOf(6, 8, 7, 6)
+    val matrix3 = solution.restoreMatrix(rowSum3, colSum3)
+    println("\nМатрица для rowSum3 и colSum3:")
+    for (row in matrix3) {
+        println(row.joinToString(", "))
+    }
 }
