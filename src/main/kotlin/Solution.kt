@@ -1,31 +1,26 @@
 class Solution {
-    fun luckyNumbers(matrix: Array<IntArray>): List<Int> {
-        val luckyNumbers = mutableListOf<Int>()
+    fun restoreMatrix(rowSum: IntArray, colSum: IntArray): Array<IntArray> {
+        val m = rowSum.size
+        val n = colSum.size
+        val matrix = Array(m) { IntArray(n) }
 
-        for (i in matrix.indices) {
-            val row = matrix[i]
-            var minInRow = row[0]
-            var minIndex = 0
-            for (j in row.indices) {
-                if (row[j] < minInRow) {
-                    minInRow = row[j]
-                    minIndex = j
-                }
+        var i = 0
+        var j = 0
+
+        while (i < m && j < n) {
+            val minValue = minOf(rowSum[i], colSum[j])
+            matrix[i][j] = minValue
+            rowSum[i] -= minValue
+            colSum[j] -= minValue
+
+            if (rowSum[i] == 0) {
+                i++
             }
-
-            var isMaxInCol = true
-            for (k in matrix.indices) {
-                if (matrix[k][minIndex] > minInRow) {
-                    isMaxInCol = false
-                    break
-                }
-            }
-
-            if (isMaxInCol) {
-                luckyNumbers.add(minInRow)
+            if (colSum[j] == 0) {
+                j++
             }
         }
 
-        return luckyNumbers
+        return matrix
     }
 }
