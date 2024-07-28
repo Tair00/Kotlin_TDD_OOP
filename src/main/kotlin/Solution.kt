@@ -1,55 +1,44 @@
-import java.util.*
+import java.util.PriorityQueue
 
 class Solution {
-    fun minimumCost(source: String, target: String, original: CharArray, changed: CharArray, cost: IntArray): Long {
-        val n = source.length
+    data class State(val node: Int, val time: Int): Comparable<State> {
+        override fun compareTo(other: State): Int = this.time - other.time
+    }
 
-        // Step 1: Build the graph with costs.
-        val graph = Array(26) { mutableListOf<Pair<Int, Int>>() }
-        for (i in original.indices) {
-            val u = original[i] - 'a'
-            val v = changed[i] - 'a'
-            val w = cost[i]
-            graph[u].add(Pair(v, w))
+    fun secondMinimum(n: Int, edges: Array<IntArray>, time: Int, change: Int): Int {
+        val graph = Array(n + 1) { mutableListOf<Int>() }
+        for (edge in edges) {
+            graph[edge[0]].add(edge[1])
+            graph[edge[1]].add(edge[0])
         }
 
-        // Step 2: Dijkstra's Algorithm to find minimum cost from each character to each other character.
-        val minCost = Array(26) { IntArray(26) { Int.MAX_VALUE } }
+        val arrivalTimes = Array(n + 1) { IntArray(2) { Int.MAX_VALUE } }
+        arrivalTimes[1][0] = 0
 
-        fun dijkstra(start: Int) {
-            val pq = PriorityQueue<Pair<Int, Int>>(compareBy { it.second })
-            pq.add(Pair(start, 0))
-            minCost[start][start] = 0
+        val pq = PriorityQueue<State>()
+        pq.add(State(1, 0))
 
-            while (pq.isNotEmpty()) {
-                val (u, currCost) = pq.poll()
+        while (pq.isNotEmpty()) {
+            val (node, currentTime) = pq.poll()
 
-                if (currCost > minCost[start][u]) continue
+            for (neighbor in graph[node]) {
+                var travelTime = currentTime
+                if ((travelTime / change) % 2 == 1) {
+                    travelTime += change - (travelTime % change)
+                }
+                travelTime += time
 
-                for ((v, weight) in graph[u]) {
-                    val newCost = currCost + weight
-                    if (newCost < minCost[start][v]) {
-                        minCost[start][v] = newCost
-                        pq.add(Pair(v, newCost))
-                    }
+                if (travelTime < arrivalTimes[neighbor][0]) {
+                    arrivalTimes[neighbor][1] = arrivalTimes[neighbor][0]
+                    arrivalTimes[neighbor][0] = travelTime
+                    pq.add(State(neighbor, travelTime))
+                } else if (travelTime > arrivalTimes[neighbor][0] && travelTime < arrivalTimes[neighbor][1]) {
+                    arrivalTimes[neighbor][1] = travelTime
+                    pq.add(State(neighbor, travelTime))
                 }
             }
         }
 
-        for (i in 0 until 26) {
-            dijkstra(i)
-        }
-
-        // Step 3: Calculate the minimum cost to transform source to target.
-        var totalCost = 0L
-        for (i in 0 until n) {
-            val u = source[i] - 'a'
-            val v = target[i] - 'a'
-            if (u == v) continue
-            if (minCost[u][v] == Int.MAX_VALUE) return -1
-            totalCost += minCost[u][v]
-        }
-
-        return totalCost
+        return if (arrivalTimes[n][1] == Int.MAX_VALUE) -1 else arrivalTimes[n][1]
     }
 }
