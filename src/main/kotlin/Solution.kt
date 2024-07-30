@@ -1,27 +1,18 @@
 class Solution {
-    fun numTeams(rating: IntArray): Int {
-        var count = 0
-        val n = rating.size
+    fun minimumDeletions(s: String): Int {
+        val n = s.length
+        var bCount = 0
+        var minDeletions = 0
 
-        for (j in 1 until n - 1) {
-            var lessLeft = 0
-            var greaterLeft = 0
-            var lessRight = 0
-            var greaterRight = 0
+        for (char in s) {
+            if (char == 'b') {
+                bCount++
+            } else if (char == 'a') {
 
-            for (i in 0 until j) {
-                if (rating[i] < rating[j]) lessLeft++
-                if (rating[i] > rating[j]) greaterLeft++
+                minDeletions = minOf(minDeletions + 1, bCount)
             }
-
-            for (k in j + 1 until n) {
-                if (rating[k] < rating[j]) lessRight++
-                if (rating[k] > rating[j]) greaterRight++
-            }
-
-            count += lessLeft * greaterRight + greaterLeft * lessRight
         }
 
-        return count
+        return minDeletions
     }
 }
