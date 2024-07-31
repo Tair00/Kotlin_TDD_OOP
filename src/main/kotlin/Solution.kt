@@ -1,18 +1,20 @@
 class Solution {
-    fun minimumDeletions(s: String): Int {
-        val n = s.length
-        var bCount = 0
-        var minDeletions = 0
+    fun minHeightShelves(books: Array<IntArray>, shelfWidth: Int): Int {
+        val n = books.size
+        val dp = IntArray(n + 1) { Int.MAX_VALUE }
+        dp[0] = 0
 
-        for (char in s) {
-            if (char == 'b') {
-                bCount++
-            } else if (char == 'a') {
-
-                minDeletions = minOf(minDeletions + 1, bCount)
+        for (i in 1..n) {
+            var width = 0
+            var height = 0
+            for (j in i downTo 1) {
+                width += books[j - 1][0]
+                if (width > shelfWidth) break
+                height = maxOf(height, books[j - 1][1])
+                dp[i] = minOf(dp[i], dp[j - 1] + height)
             }
         }
 
-        return minDeletions
+        return dp[n]
     }
 }
