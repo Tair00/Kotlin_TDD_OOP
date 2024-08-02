@@ -1,12 +1,26 @@
 class Solution {
-    fun countSeniors(details: Array<String>): Int {
-        var count = 0
-        for (detail in details) {
-            val age = detail.substring(11, 13).toInt()
-            if (age > 60) {
-                count++
-            }
+    fun minSwaps(nums: IntArray): Int {
+        val totalOnes = nums.count { it == 1 }
+        if (totalOnes == 0) return 0 // Нет 1 в массиве
+        if (totalOnes == nums.size) return 0 // Все элементы равны 1
+
+        val n = nums.size
+        var currentZeros = 0
+        var minSwaps = Int.MAX_VALUE
+
+        // Рассмотрим первое окно
+        for (i in 0 until totalOnes) {
+            if (nums[i] == 0) currentZeros++
         }
-        return count
+        minSwaps = currentZeros
+
+        // Используем скользящее окно для прохода по массиву
+        for (i in 1 until n) {
+            if (nums[(i - 1) % n] == 0) currentZeros--
+            if (nums[(i + totalOnes - 1) % n] == 0) currentZeros++
+            minSwaps = minOf(minSwaps, currentZeros)
+        }
+
+        return minSwaps
     }
 }
