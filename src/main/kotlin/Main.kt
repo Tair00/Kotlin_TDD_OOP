@@ -1,11 +1,14 @@
 fun main() {
         val solution = Solution()
-        val nums1 = intArrayOf(0, 1, 0, 1, 1, 0, 0)
-        println(solution.minSwaps(nums1)) // Ожидаемый результат: 1
+        val target1 = intArrayOf(1, 2, 3, 4)
+        val arr1 = intArrayOf(2, 4, 1, 3)
+        println(solution.canBeEqual(target1, arr1)) // Ожидаемый результат: true
 
-        val nums2 = intArrayOf(0, 1, 1, 1, 0, 0, 1, 1, 0)
-        println(solution.minSwaps(nums2)) // Ожидаемый результат: 2
+        val target2 = intArrayOf(7)
+        val arr2 = intArrayOf(7)
+        println(solution.canBeEqual(target2, arr2)) // Ожидаемый результат: true
 
-        val nums3 = intArrayOf(1, 1, 0, 0, 1)
-        println(solution.minSwaps(nums3)) // Ожидаемый результат: 0
+        val target3 = intArrayOf(3, 7, 9)
+        val arr3 = intArrayOf(3, 7, 11)
+        println(solution.canBeEqual(target3, arr3)) // Ожидаемый результат: false
 }
