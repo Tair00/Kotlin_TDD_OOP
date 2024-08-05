@@ -1,24 +1,18 @@
 fun main() {
         val solution = Solution()
 
+        // Пример 1
+        val arr1 = arrayOf("d", "b", "c", "b", "c", "a")
+        val k1 = 2
+        println(solution.kthDistinct(arr1, k1)) // Ожидаемый результат: "a"
 
-        val nums1 = intArrayOf(1, 2, 3, 4)
-        val n1 = nums1.size
-        val left1 = 1
-        val right1 = 5
-        println(solution.rangeSum(nums1, n1, left1, right1)) // Ожидаемый результат: 13
+        // Пример 2
+        val arr2 = arrayOf("aaa", "aa", "a")
+        val k2 = 1
+        println(solution.kthDistinct(arr2, k2)) // Ожидаемый результат: "aaa"
 
-
-        val nums2 = intArrayOf(1, 2, 3, 4)
-        val n2 = nums2.size
-        val left2 = 3
-        val right2 = 4
-        println(solution.rangeSum(nums2, n2, left2, right2)) // Ожидаемый результат: 6
-
-
-        val nums3 = intArrayOf(1, 2, 3, 4)
-        val n3 = nums3.size
-        val left3 = 1
-        val right3 = 10
-        println(solution.rangeSum(nums3, n3, left3, right3)) // Ожидаемый результат: 50
+        // Пример 3
+        val arr3 = arrayOf("a", "b", "a")
+        val k3 = 3
+        println(solution.kthDistinct(arr3, k3)) // Ожидаемый результат: ""
 }
