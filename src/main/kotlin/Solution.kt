@@ -1,24 +1,29 @@
 class Solution {
-    fun kthDistinct(arr: Array<String>, k: Int): String {
-        val countMap = mutableMapOf<String, Int>()
+    fun minimumPushes(word: String): Int {
+        val frequencyMap = mutableMapOf<Char, Int>()
 
-        // Подсчет количества вхождений каждой строки
-        for (str in arr) {
-            countMap[str] = countMap.getOrDefault(str, 0) + 1
+
+        for (c in word) {
+            frequencyMap[c] = frequencyMap.getOrDefault(c, 0) + 1
         }
 
-        // Поиск k-й уникальной строки
-        var distinctCount = 0
-        for (str in arr) {
-            if (countMap[str] == 1) {
-                distinctCount++
-                if (distinctCount == k) {
-                    return str
-                }
+        val frequencyList = mutableListOf<Pair<Char, Int>>()
+        for ((char, freq) in frequencyMap) {
+            frequencyList.add(Pair(char, freq))
+        }
+
+        frequencyList.sortByDescending { it.second }
+
+        var ans = 0
+        var i = 1
+
+        for (j in frequencyList.indices) {
+            if (j > 7 && j % 8 == 0) {
+                i++
             }
+            ans += i * frequencyList[j].second
         }
 
-        // Если уникальных строк меньше k, возвращаем пустую строку
-        return ""
+        return ans
     }
 }
