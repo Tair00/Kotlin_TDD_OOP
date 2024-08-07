@@ -1,6 +1,11 @@
 fun main() {
         val solution = Solution()
-        println(solution.minimumPushes("abcde"))           // Ожидаемый результат: 5
-        println(solution.minimumPushes("xyzxyzxyzxyz"))    // Ожидаемый результат: 12
-        println(solution.minimumPushes("aabbccddeeffgghhiiiiii")) // Ожидаемый результат: 24
+
+        val testCases = listOf(123, 12345, 1234567, 0, 100, 1000, 1000000)
+
+        for (testCase in testCases) {
+                println("Input: $testCase")
+                println("Output: ${solution.numberToWords(testCase)}")
+                println()
+        }
 }
