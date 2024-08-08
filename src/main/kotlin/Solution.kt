@@ -1,42 +1,32 @@
 class Solution {
-    private val belowTwenty = arrayOf(
-        "", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten", "Eleven", "Twelve",
-        "Thirteen", "Fourteen", "Fifteen", "Sixteen", "Seventeen", "Eighteen", "Nineteen"
-    )
-    private val tens = arrayOf(
-        "", "", "Twenty", "Thirty", "Forty", "Fifty", "Sixty", "Seventy", "Eighty", "Ninety"
-    )
-    private val thousands = arrayOf(
-        "", "Thousand", "Million", "Billion"
-    )
+    fun spiralMatrixIII(rows: Int, cols: Int, rStart: Int, cStart: Int): Array<IntArray> {
+        val result = mutableListOf<IntArray>()
+        val directions = arrayOf(
+            intArrayOf(0, 1),  // вправо
+            intArrayOf(1, 0),  // вниз
+            intArrayOf(0, -1), // влево
+            intArrayOf(-1, 0)  // вверх
+        )
+        var r = rStart
+        var c = cStart
+        var steps = 1
+        var directionIndex = 0
 
-    fun numberToWords(num: Int): String {
-        if (num == 0) return "Zero"
-
-        var num = num
-        var result = ""
-        var i = 0
-
-        while (num > 0) {
-            if (num % 1000 != 0) {
-                result = helper(num % 1000) + thousands[i] + " " + result
+        result.add(intArrayOf(r, c))
+        while (result.size < rows * cols) {
+            val dir = directions[directionIndex]
+            for (i in 0 until steps) {
+                r += dir[0]
+                c += dir[1]
+                if (r >= 0 && r < rows && c >= 0 && c < cols) {
+                    result.add(intArrayOf(r, c))
+                }
             }
-            num /= 1000
-            i++
+            directionIndex = (directionIndex + 1) % 4
+            if (directionIndex == 0 || directionIndex == 2) {
+                steps++
+            }
         }
-
-        return result.trim()
-    }
-
-    private fun helper(num: Int): String {
-        if (num == 0) {
-            return ""
-        } else if (num < 20) {
-            return belowTwenty[num] + " "
-        } else if (num < 100) {
-            return tens[num / 10] + " " + helper(num % 10)
-        } else {
-            return belowTwenty[num / 100] + " Hundred " + helper(num % 100)
-        }
+        return result.toTypedArray()
     }
 }
