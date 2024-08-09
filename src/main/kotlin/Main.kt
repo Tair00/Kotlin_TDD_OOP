@@ -1,8 +1,14 @@
 fun main() {
         val solution = Solution()
-        val result1 = solution.spiralMatrixIII(1, 4, 0, 0)
-        result1.forEach { println(it.contentToString()) } // Ожидаемый результат: [[0, 0], [0, 1], [0, 2], [0, 3]]
+        val grid1 = arrayOf(
+                intArrayOf(4, 3, 8, 4),
+                intArrayOf(9, 5, 1, 9),
+                intArrayOf(2, 7, 6, 2)
+        )
+        println(solution.numMagicSquaresInside(grid1))  // Ожидаемый результат: 1
 
-        val result2 = solution.spiralMatrixIII(5, 6, 1, 4)
-        result2.forEach { println(it.contentToString()) } // Ожидаемый результат: [[1, 4], [1, 5], [2, 5], ...]
+        val grid2 = arrayOf(
+                intArrayOf(8)
+        )
+        println(solution.numMagicSquaresInside(grid2))  // Ожидаемый результат: 0
 }
