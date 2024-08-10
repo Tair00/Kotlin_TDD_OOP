@@ -1,45 +1,60 @@
 class Solution {
-    fun numMagicSquaresInside(grid: Array<IntArray>): Int {
-        var count = 0
+    private lateinit var parent: IntArray
 
-        // Проходим по всем возможным подмассивам 3x3
-        for (i in 0..grid.size - 3) {
-            for (j in 0..grid[0].size - 3) {
-                if (isMagicSquare(grid, i, j)) {
-                    count++
-                }
-            }
+    private fun find(x: Int): Int {
+        if (parent[x] != x) {
+            parent[x] = find(parent[x])
         }
-
-        return count
+        return parent[x]
     }
 
-    private fun isMagicSquare(grid: Array<IntArray>, row: Int, col: Int): Boolean {
-        // Проверка, что все элементы от 1 до 9
-        val values = mutableSetOf<Int>()
-        for (i in 0 until 3) {
-            for (j in 0 until 3) {
-                val value = grid[row + i][col + j]
-                if (value < 1 || value > 9 || !values.add(value)) {
-                    return false
+    private fun union(x: Int, y: Int) {
+        val rootX = find(x)
+        val rootY = find(y)
+        if (rootX != rootY) {
+            parent[rootY] = rootX
+        }
+    }
+
+    fun regionsBySlashes(grid: Array<String>): Int {
+        val n = grid.size
+        val size = 4 * n * n
+        parent = IntArray(size) { it }
+
+        for (i in 0 until n) {
+            for (j in 0 until n) {
+                val root = 4 * (i * n + j)
+                val value = grid[i][j]
+
+                // Union the parts of the current cell
+                if (value == '/') {
+                    union(root, root + 3)
+                    union(root + 1, root + 2)
+                } else if (value == '\\') {
+                    union(root, root + 1)
+                    union(root + 2, root + 3)
+                } else {
+                    union(root, root + 1)
+                    union(root + 1, root + 2)
+                    union(root + 2, root + 3)
+                }
+
+                if (j + 1 < n) {
+                    union(root + 1, 4 * (i * n + j + 1) + 3)
+                }
+
+                if (i + 1 < n) {
+                    union(root + 2, 4 * ((i + 1) * n + j))
                 }
             }
         }
 
-        // Проверка суммы строк, столбцов и диагоналей
-        val sum1 = grid[row][col] + grid[row][col + 1] + grid[row][col + 2]
-        val sum2 = grid[row + 1][col] + grid[row + 1][col + 1] + grid[row + 1][col + 2]
-        val sum3 = grid[row + 2][col] + grid[row + 2][col + 1] + grid[row + 2][col + 2]
-
-        val sum4 = grid[row][col] + grid[row + 1][col] + grid[row + 2][col]
-        val sum5 = grid[row][col + 1] + grid[row + 1][col + 1] + grid[row + 2][col + 1]
-        val sum6 = grid[row][col + 2] + grid[row + 1][col + 2] + grid[row + 2][col + 2]
-
-        val diag1 = grid[row][col] + grid[row + 1][col + 1] + grid[row + 2][col + 2]
-        val diag2 = grid[row][col + 2] + grid[row + 1][col + 1] + grid[row + 2][col]
-
-        return sum1 == 15 && sum2 == 15 && sum3 == 15 &&
-                sum4 == 15 && sum5 == 15 && sum6 == 15 &&
-                diag1 == 15 && diag2 == 15
+        var regions = 0
+        for (i in 0 until size) {
+            if (find(i) == i) {
+                regions++
+            }
+        }
+        return regions
     }
 }
