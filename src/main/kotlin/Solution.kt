@@ -1,60 +1,79 @@
 class Solution {
-    private lateinit var parent: IntArray
 
-    private fun find(x: Int): Int {
-        if (parent[x] != x) {
-            parent[x] = find(parent[x])
+    private fun isConnected(grid: Array<IntArray>): Boolean {
+        val m = grid.size
+        val n = grid[0].size
+        val visited = Array(m) { BooleanArray(n) }
+
+        fun dfs(x: Int, y: Int) {
+            if (x < 0 || x >= m || y < 0 || y >= n || grid[x][y] == 0 || visited[x][y]) return
+            visited[x][y] = true
+            dfs(x + 1, y)
+            dfs(x - 1, y)
+            dfs(x, y + 1)
+            dfs(x, y - 1)
         }
-        return parent[x]
-    }
 
-    private fun union(x: Int, y: Int) {
-        val rootX = find(x)
-        val rootY = find(y)
-        if (rootX != rootY) {
-            parent[rootY] = rootX
-        }
-    }
-
-    fun regionsBySlashes(grid: Array<String>): Int {
-        val n = grid.size
-        val size = 4 * n * n
-        parent = IntArray(size) { it }
-
-        for (i in 0 until n) {
+        var found = false
+        outer@ for (i in 0 until m) {
             for (j in 0 until n) {
-                val root = 4 * (i * n + j)
-                val value = grid[i][j]
-
-                // Union the parts of the current cell
-                if (value == '/') {
-                    union(root, root + 3)
-                    union(root + 1, root + 2)
-                } else if (value == '\\') {
-                    union(root, root + 1)
-                    union(root + 2, root + 3)
-                } else {
-                    union(root, root + 1)
-                    union(root + 1, root + 2)
-                    union(root + 2, root + 3)
-                }
-
-                if (j + 1 < n) {
-                    union(root + 1, 4 * (i * n + j + 1) + 3)
-                }
-
-                if (i + 1 < n) {
-                    union(root + 2, 4 * ((i + 1) * n + j))
+                if (grid[i][j] == 1) {
+                    dfs(i, j)
+                    found = true
+                    break@outer
                 }
             }
         }
 
-        var regions = 0
-        for (i in 0 until size) {
-            if (find(i) == i) {
-                regions++
+        if (!found) return false
+
+        for (i in 0 until m) {
+            for (j in 0 until n) {
+                if (grid[i][j] == 1 && !visited[i][j]) {
+                    return false
+                }
             }
         }
-        return regions
+
+        return true
+    }
+
+    fun minDays(grid: Array<IntArray>): Int {
+        val m = grid.size
+        val n = grid[0].size
+
+        if (!isConnected(grid)) {
+            return 0
+        }
+
+        var landCells = 0
+        for (i in 0 until m) {
+            for (j in 0 until n) {
+                if (grid[i][j] == 1) {
+                    landCells++
+                }
+            }
+        }
+
+
+        if (landCells == 1) {
+            return 1
+        }
+
+
+        for (i in 0 until m) {
+            for (j in 0 until n) {
+                if (grid[i][j] == 1) {
+                    grid[i][j] = 0
+                    if (!isConnected(grid)) {
+                        return 1
+                    }
+                    grid[i][j] = 1
+                }
+            }
+        }
+
+
+        return 2
     }
 }
