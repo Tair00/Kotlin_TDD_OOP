@@ -1,9 +1,12 @@
 fun main() {
+        val arrays = listOf(
+                listOf(1, 2, 3),
+                listOf(4, 5),
+                listOf(1, 2, 3)
+        )
+
         val solution = Solution()
+        val result = solution.maxDistance(arrays)
 
-        val bills1 = intArrayOf(5, 5, 5, 10, 20)
-        println(solution.lemonadeChange(bills1)) // Ожидается true
-
-        val bills2 = intArrayOf(5, 5, 10, 10, 20)
-        println(solution.lemonadeChange(bills2)) // Ожидается false
+        println("Максимальное расстояние: $result")
 }
