@@ -1,12 +1,14 @@
 fun main() {
-        val arrays = listOf(
-                listOf(1, 2, 3),
-                listOf(4, 5),
-                listOf(1, 2, 3)
+        val solution = Solution()
+
+        // Пример матрицы points
+        val points = arrayOf(
+                intArrayOf(1, 2, 3),
+                intArrayOf(1, 5, 1),
+                intArrayOf(3, 1, 1)
         )
 
-        val solution = Solution()
-        val result = solution.maxDistance(arrays)
-
-        println("Максимальное расстояние: $result")
+        // Вызов функции maxPoints и вывод результата
+        val result = solution.maxPoints(points)
+        println("Максимальное количество очков: $result")
 }
