@@ -1,21 +1,31 @@
 class Solution {
-    fun maxDistance(arrays: List<List<Int>>): Int {
-        var maxDist = 0
-        var minVal = arrays[0][0]
-        var maxVal = arrays[0][arrays[0].size - 1]
+    fun maxPoints(points: Array<IntArray>): Long {
+        val m = points.size
+        val n = points[0].size
+        var dp = LongArray(n) { points[0][it].toLong() }
 
-        for (i in 1 until arrays.size) {
-            val currentMin = arrays[i][0]
-            val currentMax = arrays[i][arrays[i].size - 1]
+        for (r in 1 until m) {
+            val newDp = LongArray(n)
 
-            // Calculate the possible distances
-            maxDist = maxOf(maxDist, Math.abs(currentMax - minVal), Math.abs(maxVal - currentMin))
+            // Left pass
+            var leftMax = dp[0]
+            newDp[0] = leftMax + points[r][0]
+            for (c in 1 until n) {
+                leftMax = maxOf(leftMax - 1, dp[c])
+                newDp[c] = leftMax + points[r][c]
+            }
 
-            // Update the global min and max
-            minVal = minOf(minVal, currentMin)
-            maxVal = maxOf(maxVal, currentMax)
+            // Right pass
+            var rightMax = dp[n - 1]
+            newDp[n - 1] = maxOf(newDp[n - 1], rightMax + points[r][n - 1])
+            for (c in n - 2 downTo 0) {
+                rightMax = maxOf(rightMax - 1, dp[c])
+                newDp[c] = maxOf(newDp[c], rightMax + points[r][c])
+            }
+
+            dp = newDp
         }
 
-        return maxDist
+        return dp.maxOrNull() ?: 0L
     }
 }
