@@ -1,31 +1,33 @@
 class Solution {
-    fun maxPoints(points: Array<IntArray>): Long {
-        val m = points.size
-        val n = points[0].size
-        var dp = LongArray(n) { points[0][it].toLong() }
+    fun nthUglyNumber(n: Int): Int {
+        val uglyNumbers = IntArray(n)
+        uglyNumbers[0] = 1
+        var i2 = 0
+        var i3 = 0
+        var i5 = 0
 
-        for (r in 1 until m) {
-            val newDp = LongArray(n)
+        var nextMultipleOf2 = 2
+        var nextMultipleOf3 = 3
+        var nextMultipleOf5 = 5
 
-            // Left pass
-            var leftMax = dp[0]
-            newDp[0] = leftMax + points[r][0]
-            for (c in 1 until n) {
-                leftMax = maxOf(leftMax - 1, dp[c])
-                newDp[c] = leftMax + points[r][c]
+        for (i in 1 until n) {
+            val nextUgly = minOf(nextMultipleOf2, nextMultipleOf3, nextMultipleOf5)
+            uglyNumbers[i] = nextUgly
+
+            if (nextUgly == nextMultipleOf2) {
+                i2++
+                nextMultipleOf2 = uglyNumbers[i2] * 2
             }
-
-            // Right pass
-            var rightMax = dp[n - 1]
-            newDp[n - 1] = maxOf(newDp[n - 1], rightMax + points[r][n - 1])
-            for (c in n - 2 downTo 0) {
-                rightMax = maxOf(rightMax - 1, dp[c])
-                newDp[c] = maxOf(newDp[c], rightMax + points[r][c])
+            if (nextUgly == nextMultipleOf3) {
+                i3++
+                nextMultipleOf3 = uglyNumbers[i3] * 3
             }
-
-            dp = newDp
+            if (nextUgly == nextMultipleOf5) {
+                i5++
+                nextMultipleOf5 = uglyNumbers[i5] * 5
+            }
         }
 
-        return dp.maxOrNull() ?: 0L
+        return uglyNumbers[n - 1]
     }
 }
