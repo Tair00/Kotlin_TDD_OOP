@@ -1,50 +1,37 @@
-import kotlin.math.abs
-
 class Solution {
-    fun fractionAddition(expression: String): String {
-        var numerator = 0
-        var denominator = 1
-        var index = 0
+    fun nearestPalindromic(n: String): String {
+        val length = n.length
+        val candidates = mutableSetOf<Long>()
 
-        while (index < expression.length) {
 
-            var sign = 1
-            if (expression[index] == '-' || expression[index] == '+') {
-                if (expression[index] == '-') sign = -1
-                index++
+        candidates.add(Math.pow(10.0, (length - 1).toDouble()).toLong() - 1)  // 999..999
+        candidates.add(Math.pow(10.0, length.toDouble()).toLong() + 1)       // 100..001
+
+
+        val prefix = n.substring(0, (length + 1) / 2).toLong()
+
+        for (i in -1..1) {
+            val newPrefix = (prefix + i).toString()
+            val candidate = if (length % 2 == 0) {
+                newPrefix + newPrefix.reversed()
+            } else {
+                newPrefix + newPrefix.dropLast(1).reversed()
             }
-
-
-            var currentNumerator = 0
-            while (index < expression.length && expression[index].isDigit()) {
-                currentNumerator = currentNumerator * 10 + (expression[index] - '0')
-                index++
-            }
-            currentNumerator *= sign
-
-
-            index++
-
-            var currentDenominator = 0
-            while (index < expression.length && expression[index].isDigit()) {
-                currentDenominator = currentDenominator * 10 + (expression[index] - '0')
-                index++
-            }
-
-
-            numerator = numerator * currentDenominator + currentNumerator * denominator
-            denominator *= currentDenominator
-
-            val gcd = gcd(abs(numerator), denominator)
-            numerator /= gcd
-            denominator /= gcd
+            candidates.add(candidate.toLong())
         }
 
-        return "$numerator/$denominator"
-    }
 
-    private fun gcd(a: Int, b: Int): Int {
-        if (b == 0) return a
-        return gcd(b, a % b)
+        candidates.remove(n.toLong())
+
+
+        var nearest = -1L
+        for (candidate in candidates) {
+            if (nearest == -1L || Math.abs(candidate - n.toLong()) < Math.abs(nearest - n.toLong()) ||
+                (Math.abs(candidate - n.toLong()) == Math.abs(nearest - n.toLong()) && candidate < nearest)) {
+                nearest = candidate
+            }
+        }
+
+        return nearest.toString()
     }
 }
