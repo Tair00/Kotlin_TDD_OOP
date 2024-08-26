@@ -1,23 +1,21 @@
-class TreeNode(var `val`: Int) {
-    var left: TreeNode? = null
-    var right: TreeNode? = null
+class Node(var `val`: Int) {
+    var children: List<Node?> = listOf()
 }
 
+
 class Solution {
-    fun postorderTraversal(root: TreeNode?): List<Int> {
+    fun postorder(root: Node?): List<Int> {
         val result = mutableListOf<Int>()
         postorderHelper(root, result)
         return result
     }
 
-    private fun postorderHelper(node: TreeNode?, result: MutableList<Int>) {
-        if (node == null) {
-            return
+    private fun postorderHelper(node: Node?, result: MutableList<Int>) {
+        if (node == null) return
+
+        for (child in node.children) {
+            postorderHelper(child, result)
         }
-
-        postorderHelper(node.left, result)
-
-        postorderHelper(node.right, result)
 
         result.add(node.`val`)
     }
