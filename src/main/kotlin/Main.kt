@@ -1,12 +1,20 @@
 fun main() {
+        val grid1 = arrayOf(
+                intArrayOf(1,1,1,0,0),
+                intArrayOf(0,1,1,1,1),
+                intArrayOf(0,0,0,0,0),
+                intArrayOf(1,0,0,0,0),
+                intArrayOf(1,1,0,1,1)
+        )
+        val grid2 = arrayOf(
+                intArrayOf(1,1,1,0,0),
+                intArrayOf(0,0,1,1,1),
+                intArrayOf(0,1,0,0,0),
+                intArrayOf(1,0,1,1,0),
+                intArrayOf(0,1,0,1,0)
+        )
+
         val solution = Solution()
-
-        val n1 = 2
-        println("Number of ways to climb $n1 steps: ${solution.climbStairs(n1)}") // Output: 2
-
-        val n2 = 3
-        println("Number of ways to climb $n2 steps: ${solution.climbStairs(n2)}") // Output: 3
-
-        val n3 = 5
-        println("Number of ways to climb $n3 steps: ${solution.climbStairs(n3)}") // Output: 8
+        val result = solution.countSubIslands(grid1, grid2)
+        println("Number of sub-islands: $result") // Output: 3
 }
