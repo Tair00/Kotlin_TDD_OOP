@@ -1,37 +1,39 @@
 class Solution {
-    fun countSubIslands(grid1: Array<IntArray>, grid2: Array<IntArray>): Int {
-        val rows = grid1.size
-        val cols = grid1[0].size
-        var subIslandCount = 0
+    fun removeStones(stones: Array<IntArray>): Int {
+        val parent = mutableMapOf<Int, Int>()
 
-        fun dfs(r: Int, c: Int): Boolean {
-            if (r < 0 || r >= rows || c < 0 || c >= cols || grid2[r][c] == 0) {
-                return true
+        // Function to find the root (with path compression)
+        fun find(x: Int): Int {
+            if (parent.getOrDefault(x, x) != x) {
+                parent[x] = find(parent[x]!!)
             }
-
-            grid2[r][c] = 0
-
-            var isSubIsland = grid1[r][c] == 1
-
-
-            isSubIsland = dfs(r + 1, c) && isSubIsland
-            isSubIsland = dfs(r - 1, c) && isSubIsland
-            isSubIsland = dfs(r, c + 1) && isSubIsland
-            isSubIsland = dfs(r, c - 1) && isSubIsland
-
-            return isSubIsland
+            return parent.getOrDefault(x, x)
         }
 
-        for (r in 0 until rows) {
-            for (c in 0 until cols) {
-                if (grid2[r][c] == 1) {
-                    if (dfs(r, c)) {
-                        subIslandCount++
-                    }
-                }
+        // Function to union two components
+        fun union(x: Int, y: Int) {
+            val rootX = find(x)
+            val rootY = find(y)
+            if (rootX != rootY) {
+                parent[rootX] = rootY
             }
         }
 
-        return subIslandCount
+        // Union stones by rows and columns
+        for (stone in stones) {
+            val x = stone[0] + 10000 // Shift to distinguish between row and column
+            val y = stone[1]
+            union(x, y)
+        }
+
+        // Count unique components
+        val uniqueRoots = mutableSetOf<Int>()
+        for (stone in stones) {
+            val x = stone[0] + 10000
+            uniqueRoots.add(find(x))
+        }
+
+        // Total stones minus the number of components
+        return stones.size - uniqueRoots.size
     }
 }
