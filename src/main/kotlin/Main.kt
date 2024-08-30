@@ -1,33 +1,46 @@
 fun main() {
         val solution = Solution()
 
-        // Example 1
-        val stones1 = arrayOf(
-                intArrayOf(0, 0),
-                intArrayOf(0, 1),
-                intArrayOf(1, 0),
-                intArrayOf(1, 2),
-                intArrayOf(2, 1),
-                intArrayOf(2, 2)
+        // Test Case 1
+        val n1 = 5
+        val edges1 = arrayOf(
+                intArrayOf(4, 1, -1),
+                intArrayOf(2, 0, -1),
+                intArrayOf(0, 3, -1),
+                intArrayOf(4, 3, -1)
         )
-        val result1 = solution.removeStones(stones1)
-        println("Output for stones1: $result1")  // Expected Output: 5
+        val source1 = 0
+        val destination1 = 1
+        val target1 = 5
+        val result1 = solution.modifiedGraphEdges(n1, edges1, source1, destination1, target1)
+        println("Output for Test Case 1:")
+        result1.forEach { println(it.contentToString()) }
 
-        // Example 2
-        val stones2 = arrayOf(
-                intArrayOf(0, 0),
-                intArrayOf(0, 2),
-                intArrayOf(1, 1),
-                intArrayOf(2, 0),
-                intArrayOf(2, 2)
+        // Test Case 2
+        val n2 = 3
+        val edges2 = arrayOf(
+                intArrayOf(0, 1, -1),
+                intArrayOf(0, 2, 5)
         )
-        val result2 = solution.removeStones(stones2)
-        println("Output for stones2: $result2")  // Expected Output: 3
+        val source2 = 0
+        val destination2 = 2
+        val target2 = 6
+        val result2 = solution.modifiedGraphEdges(n2, edges2, source2, destination2, target2)
+        println("Output for Test Case 2:")
+        result2.forEach { println(it.contentToString()) }
 
-        // Example 3
-        val stones3 = arrayOf(
-                intArrayOf(0, 0)
+        // Test Case 3
+        val n3 = 4
+        val edges3 = arrayOf(
+                intArrayOf(1, 0, 4),
+                intArrayOf(1, 2, 3),
+                intArrayOf(2, 3, 5),
+                intArrayOf(0, 3, -1)
         )
-        val result3 = solution.removeStones(stones3)
-        println("Output for stones3: $result3")  // Expected Output: 0
+        val source3 = 0
+        val destination3 = 2
+        val target3 = 6
+        val result3 = solution.modifiedGraphEdges(n3, edges3, source3, destination3, target3)
+        println("Output for Test Case 3:")
+        result3.forEach { println(it.contentToString()) }
 }
