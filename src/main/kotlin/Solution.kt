@@ -1,19 +1,14 @@
 class Solution {
-    fun chalkReplacer(chalk: IntArray, k: Int): Int {
+    fun getLucky(s: String, k: Int): Int {
 
-        val totalChalk = chalk.map { it.toLong() }.sum()
+        var numString = s.map { (it - 'a' + 1).toString() }.joinToString("")
 
+        var result = numString.map { it.toString().toInt() }.sum()
 
-        var remainingChalk = k % totalChalk
-
-
-        for (i in chalk.indices) {
-            if (remainingChalk < chalk[i]) {
-                return i
-            }
-            remainingChalk -= chalk[i]
+        for (i in 1 until k) {
+            result = result.toString().map { it.toString().toInt() }.sum()
         }
 
-        return -1
+        return result
     }
 }
