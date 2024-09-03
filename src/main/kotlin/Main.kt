@@ -1,23 +1,21 @@
 fun main() {
-
-        val chalk = intArrayOf(5, 1, 5)
-        val k = 22
         val solution = Solution()
-        val result = solution.chalkReplacer(chalk, k)
-        println("The student who will replace the chalk is: $result")  // Output: 0
 
+        // Пример 1:
+        val s1 = "iiii"
+        val k1 = 1
+        val result1 = solution.getLucky(s1, k1)
+        println("Результат для s = \"$s1\" и k = $k1: $result1") // Ожидаемый результат: 36
 
-        val largeChalk = intArrayOf(
-                96805, 14622, 42759, 90178, 16799, 38304, 62918, 619, 46267, 14352, 43912, 6660, 68957, 7456, 93084,
-                3134, 5745, 52044, 26011, 23244, 3805, 71365, 40339, 3631, 37577, 50347, 73600, 69250, 40000, 45825,
-                31501, 80054, 67766, 48495, 67294, 11864, 46973, 96241, 46229, 99025, 93043, 30865, 53012, 16085,
-                32542, 29851, 13404, 33897, 96335, 86769, 58214, 24634, 26717, 65929, 78473, 31867, 86780, 35630,
-                17211, 11331, 32937, 69533, 57627, 12329, 79682, 66687, 4678, 74153, 80592, 28612, 40407, 79991,
-                48216, 30833, 73142, 19396, 77628, 24761, 90437, 2739, 48260, 90201, 10203, 55226, 72656, 20588,
-                38750, 23318, 39385, 90862, 57792, 57868, 8670, 16662, 45007, 93587, 4394, 24199, 38854, 52643,
-                75179, 87680, 65053, 8
-        )
-        val largeK = 539095482
-        val largeResult = solution.chalkReplacer(largeChalk, largeK)
-        println("The student who will replace the chalk is: $largeResult")  // Corrected output: 10737
+        // Пример 2:
+        val s2 = "leetcode"
+        val k2 = 2
+        val result2 = solution.getLucky(s2, k2)
+        println("Результат для s = \"$s2\" и k = $k2: $result2") // Ожидаемый результат: 6
+
+        // Пример 3:
+        val s3 = "zbax"
+        val k3 = 2
+        val result3 = solution.getLucky(s3, k3)
+        println("Результат для s = \"$s3\" и k = $k3: $result3") // Ожидаемый результат: 8
 }
