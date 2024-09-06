@@ -1,22 +1,21 @@
 fun main() {
+
+        val nums1 = intArrayOf(1, 2, 3)
+        val head1 = createLinkedList(intArrayOf(1, 2, 3, 4, 5))
         val solution = Solution()
+        val result1 = solution.modifiedList(nums1, head1)
+        print("Example 1 result: ")
+        printLinkedList(result1)  // Output: 4 5
 
-        // Example 1
-        val rolls1 = intArrayOf(3, 2, 4, 3)
-        val mean1 = 4
-        val n1 = 2
-        val result1 = solution.missingRolls(rolls1, mean1, n1)
-        println("Example 1 result: ${result1.joinToString(", ")}")
+        val nums2 = intArrayOf(1)
+        val head2 = createLinkedList(intArrayOf(1, 2, 1, 2, 1, 2))
+        val result2 = solution.modifiedList(nums2, head2)
+        print("Example 2 result: ")
+        printLinkedList(result2)  // Output: 2 2 2
 
-        val rolls2 = intArrayOf(1, 5, 6)
-        val mean2 = 3
-        val n2 = 4
-        val result2 = solution.missingRolls(rolls2, mean2, n2)
-        println("Example 2 result: ${result2.joinToString(", ")}")
-
-        val rolls3 = intArrayOf(1, 2, 3, 4)
-        val mean3 = 6
-        val n3 = 4
-        val result3 = solution.missingRolls(rolls3, mean3, n3)
-        println("Example 3 result: ${result3.joinToString(", ")}")
+        val nums3 = intArrayOf(5)
+        val head3 = createLinkedList(intArrayOf(1, 2, 3, 4))
+        val result3 = solution.modifiedList(nums3, head3)
+        print("Example 3 result: ")
+        printLinkedList(result3)  // Output: 1 2 3 4
 }
