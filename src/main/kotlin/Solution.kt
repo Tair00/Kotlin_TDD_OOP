@@ -1,28 +1,42 @@
+
+class ListNode(var `val`: Int) {
+    var next: ListNode? = null
+}
+
+
 class Solution {
-    fun missingRolls(rolls: IntArray, mean: Int, n: Int): IntArray {
-
-        val m = rolls.size
-        val totalSum = mean * (n + m)
-
-
-        val knownSum = rolls.sum()
-
-
-        val missingSum = totalSum - knownSum
-
-
-        if (missingSum < n || missingSum > 6 * n) {
-            return intArrayOf() // No valid solution
+    fun modifiedList(nums: IntArray, head: ListNode?): ListNode? {
+        val numSet = nums.toSet()
+        val dummy = ListNode(0)
+        dummy.next = head
+        var current = dummy
+        while (current.next != null) {
+            if (current.next?.`val` in numSet) {
+                current.next = current.next?.next
+            } else {
+                current = current.next!!
+            }
         }
-
-
-        val result = IntArray(n) { missingSum / n }
-        var remainder = missingSum % n
-        
-        for (i in 0 until remainder) {
-            result[i]++
-        }
-
-        return result
+        return dummy.next
     }
+}
+
+fun createLinkedList(arr: IntArray): ListNode? {
+    if (arr.isEmpty()) return null
+    val head = ListNode(arr[0])
+    var current = head
+    for (i in 1 until arr.size) {
+        current.next = ListNode(arr[i])
+        current = current.next!!
+    }
+    return head
+}
+
+fun printLinkedList(head: ListNode?) {
+    var current = head
+    while (current != null) {
+        print("${current.`val`} ")
+        current = current.next
+    }
+    println()
 }
