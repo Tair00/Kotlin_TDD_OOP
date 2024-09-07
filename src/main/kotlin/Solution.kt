@@ -1,42 +1,34 @@
 
-class ListNode(var `val`: Int) {
-    var next: ListNode? = null
-}
 
 
+  class ListNode(var `val`: Int) {
+     var next: ListNode? = null
+  }
+
+
+
+  var ti = TreeNode(5)
+  var v = ti.`val`
+
+  class TreeNode(var `val`: Int) {
+      var left: TreeNode? = null
+     var right: TreeNode? = null }
 class Solution {
-    fun modifiedList(nums: IntArray, head: ListNode?): ListNode? {
-        val numSet = nums.toSet()
-        val dummy = ListNode(0)
-        dummy.next = head
-        var current = dummy
-        while (current.next != null) {
-            if (current.next?.`val` in numSet) {
-                current.next = current.next?.next
-            } else {
-                current = current.next!!
-            }
-        }
-        return dummy.next
-    }
-}
 
-fun createLinkedList(arr: IntArray): ListNode? {
-    if (arr.isEmpty()) return null
-    val head = ListNode(arr[0])
-    var current = head
-    for (i in 1 until arr.size) {
-        current.next = ListNode(arr[i])
-        current = current.next!!
-    }
-    return head
-}
+    fun isSubPath(head: ListNode?, root: TreeNode?): Boolean {
 
-fun printLinkedList(head: ListNode?) {
-    var current = head
-    while (current != null) {
-        print("${current.`val`} ")
-        current = current.next
+        if (root == null) return false
+
+        return checkSubPath(head, root) || isSubPath(head, root.left) || isSubPath(head, root.right)
     }
-    println()
+
+
+    fun checkSubPath(head: ListNode?, node: TreeNode?): Boolean {
+
+        if (head == null) return true
+
+        if (node == null || head.`val` != node.`val`) return false
+
+        return checkSubPath(head.next, node.left) || checkSubPath(head.next, node.right)
+    }
 }
