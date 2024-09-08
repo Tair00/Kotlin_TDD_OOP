@@ -1,34 +1,40 @@
+class ListNode(var `val`: Int) {
+    var next: ListNode? = null
+}
 
-
-
-  class ListNode(var `val`: Int) {
-     var next: ListNode? = null
-  }
-
-
-
-  var ti = TreeNode(5)
-  var v = ti.`val`
-
-  class TreeNode(var `val`: Int) {
-      var left: TreeNode? = null
-     var right: TreeNode? = null }
 class Solution {
-
-    fun isSubPath(head: ListNode?, root: TreeNode?): Boolean {
-
-        if (root == null) return false
-
-        return checkSubPath(head, root) || isSubPath(head, root.left) || isSubPath(head, root.right)
-    }
+    fun splitListToParts(head: ListNode?, k: Int): Array<ListNode?> {
+        val result = Array<ListNode?>(k) { null }
+        var current = head
 
 
-    fun checkSubPath(head: ListNode?, node: TreeNode?): Boolean {
+        var length = 0
+        var temp = head
+        while (temp != null) {
+            length++
+            temp = temp.next
+        }
 
-        if (head == null) return true
+        val partSize = length / k
+        var extraParts = length % k
 
-        if (node == null || head.`val` != node.`val`) return false
 
-        return checkSubPath(head.next, node.left) || checkSubPath(head.next, node.right)
+        for (i in 0 until k) {
+            result[i] = current
+            var currentPartSize = partSize + if (extraParts > 0) 1 else 0
+            extraParts--
+
+
+            for (j in 1 until currentPartSize) {
+                current = current?.next
+            }
+
+
+            val nextPart = current?.next
+            current?.next = null
+            current = nextPart
+        }
+
+        return result
     }
 }
