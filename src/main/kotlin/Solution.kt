@@ -3,38 +3,41 @@ class ListNode(var `val`: Int) {
 }
 
 class Solution {
-    fun splitListToParts(head: ListNode?, k: Int): Array<ListNode?> {
-        val result = Array<ListNode?>(k) { null }
+    fun spiralMatrix(m: Int, n: Int, head: ListNode?): Array<IntArray> {
+
+        val matrix = Array(m) { IntArray(n) { -1 } }
         var current = head
 
+        val directions = arrayOf(
+            intArrayOf(0, 1),
+            intArrayOf(1, 0),
+            intArrayOf(0, -1),
+            intArrayOf(-1, 0)
+        )
 
-        var length = 0
-        var temp = head
-        while (temp != null) {
-            length++
-            temp = temp.next
-        }
+        var dirIndex = 0
+        var row = 0
+        var col = 0
+        var total = m * n
+        var step = 0
+        while (current != null && step < total) {
+            matrix[row][col] = current.`val`
+            current = current.next
+            step++
 
-        val partSize = length / k
-        var extraParts = length % k
+            val nextRow = row + directions[dirIndex][0]
+            val nextCol = col + directions[dirIndex][1]
 
-
-        for (i in 0 until k) {
-            result[i] = current
-            var currentPartSize = partSize + if (extraParts > 0) 1 else 0
-            extraParts--
-
-
-            for (j in 1 until currentPartSize) {
-                current = current?.next
+            if (nextRow in 0 until m && nextCol in 0 until n && matrix[nextRow][nextCol] == -1) {
+                row = nextRow
+                col = nextCol
+            } else {
+                dirIndex = (dirIndex + 1) % 4
+                row += directions[dirIndex][0]
+                col += directions[dirIndex][1]
             }
-
-
-            val nextPart = current?.next
-            current?.next = null
-            current = nextPart
         }
 
-        return result
+        return matrix
     }
 }
