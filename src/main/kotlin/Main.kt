@@ -1,43 +1,30 @@
 fun main() {
+    val m = 3
+    val n = 5
+    val listValues = listOf(3, 0, 2, 6, 8, 1, 7, 9, 4, 2, 5, 5, 0)
 
-    fun createLinkedList(arr: IntArray): ListNode? {
-        if (arr.isEmpty()) return null
-        val head = ListNode(arr[0])
-        var current = head
-        for (i in 1 until arr.size) {
-            current.next = ListNode(arr[i])
-            current = current.next!!
-        }
-        return head
-    }
+    val head = createLinkedList(listValues)
 
-
-    fun printLinkedList(head: ListNode?) {
-        var current = head
-        while (current != null) {
-            print("${current!!.`val`} ")
-            current = current!!.next
-        }
-        println()
-    }
-
-
-    val head1 = createLinkedList(intArrayOf(1, 2, 3))
-    val k1 = 5
+    // Создание объекта Solution и вызов метода spiralMatrix
     val solution = Solution()
-    val result1 = solution.splitListToParts(head1, k1)
+    val head = createLinkedList(listValues)
+    val resultMatrix = solution.spiralMatrix(m, n, head)
 
-    println("Example 1 result:")
-    for (part in result1) {
-        printLinkedList(part)
+    // Вывод результата
+    for (row in resultMatrix) {
+        println(row.joinToString(", "))
+    }
+}
+fun createLinkedList(values: List<Int>): ListNode? {
+    if (values.isEmpty()) return null
+
+    val head = ListNode(values[0])
+    var current = head
+
+    for (i in 1 until values.size) {
+        current.next = ListNode(values[i])
+        current = current.next!!
     }
 
-    val head2 = createLinkedList(intArrayOf(1, 2, 3, 4, 5, 6, 7, 8, 9, 10))
-    val k2 = 3
-    val result2 = solution.splitListToParts(head2, k2)
-
-    println("Example 2 result:")
-    for (part in result2) {
-        printLinkedList(part)
-    }
+    return head
 }
