@@ -1,46 +1,32 @@
+import kotlin.math.*
+
 class ListNode(var `val`: Int) {
     var next: ListNode? = null
 }
 
 class Solution {
-    fun spiralMatrix(m: Int, n: Int, head: ListNode?): Array<IntArray> {
-
-        val matrix = Array(m) { IntArray(n) { -1 } }
+    fun insertGreatestCommonDivisors(head: ListNode?): ListNode? {
         var current = head
 
-        val directions = arrayOf(
-            intArrayOf(0, 1),
-            intArrayOf(1, 0),
-            intArrayOf(0, -1),
-            intArrayOf(-1, 0)
-        )
+        while (current != null && current.next != null) {e
+            val gcdValue = gcd(current.`val`, current.next!!.`val`)
 
-        var dirIndex = 0
-        var row = 0
-        var col = 0
-        var total = m * n
-        var step = 0
-        while (current != null && step < total) {
-            matrix[row][col] = current.`val`
-            current = current.next
-            step++
 
-            val nextRow = row + directions[dirIndex][0]
-            val nextCol = col + directions[dirIndex][1]
+            val newNode = ListNode(gcdValue)
 
-            if (nextRow in 0 until m && nextCol in 0 until n && matrix[nextRow][nextCol] == -1) {
-                row = nextRow
-                col = nextCol
-            } else {
-                dirIndex = (dirIndex + 1) % 4
-                row += directions[dirIndex][0]
-                col += directions[dirIndex][1]
-            }
+
+            newNode.next = current.next
+            current.next = newNode
+
+
+            current = newNode.next
         }
 
-        return matrix
+        return head
     }
 
-
-
+    private fun gcd(a: Int, b: Int): Int {
+        if (b == 0) return a
+        return gcd(b, a % b)
+    }
 }
