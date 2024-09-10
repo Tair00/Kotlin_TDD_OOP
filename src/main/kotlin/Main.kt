@@ -1,30 +1,25 @@
 fun main() {
-    val m = 3
-    val n = 5
-    val listValues = listOf(3, 0, 2, 6, 8, 1, 7, 9, 4, 2, 5, 5, 0)
 
-    val head = createLinkedList(listValues)
+    val head = ListNode(18)
+    head.next = ListNode(6)
+    head.next?.next = ListNode(10)
+    head.next?.next?.next = ListNode(3)
 
-    // Создание объекта Solution и вызов метода spiralMatrix
+    println("Original list:")
+    printLinkedList(head)
+
     val solution = Solution()
-    val head = createLinkedList(listValues)
-    val resultMatrix = solution.spiralMatrix(m, n, head)
+    val modifiedHead = solution.insertGreatestCommonDivisors(head)
 
-    // Вывод результата
-    for (row in resultMatrix) {
-        println(row.joinToString(", "))
-    }
+    println("Modified list with GCD nodes inserted:")
+    printLinkedList(modifiedHead)
 }
-fun createLinkedList(values: List<Int>): ListNode? {
-    if (values.isEmpty()) return null
 
-    val head = ListNode(values[0])
+fun printLinkedList(head: ListNode?) {
     var current = head
-
-    for (i in 1 until values.size) {
-        current.next = ListNode(values[i])
-        current = current.next!!
+    while (current != null) {
+        print("${current.`val`} ")
+        current = current.next
     }
-
-    return head
+    println()
 }
