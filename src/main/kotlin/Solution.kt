@@ -1,15 +1,20 @@
 class Solution {
-    fun countConsistentStrings(allowed: String, words: Array<String>): Int {
-        val allowedSet = allowed.toSet()
-        var count = 0
+    fun longestSubarray(nums: IntArray): Int {
 
+        val maxVal = nums.maxOrNull() ?: return 0
 
-        for (word in words) {
-            if (word.all { it in allowedSet }) {
-                count++
+        var maxLength = 0
+        var currentLength = 0
+
+            for (num in nums) {
+            if (num == maxVal) {
+                currentLength++
+                maxLength = kotlin.math.max(maxLength, currentLength)
+            } else {
+                currentLength = 0
             }
         }
 
-        return count
+        return maxLength
     }
 }
