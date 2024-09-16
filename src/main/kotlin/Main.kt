@@ -1,11 +1,13 @@
 fun main() {
     val solution = Solution()
 
-    val nums1 = intArrayOf(1, 2, 3, 3, 2, 2)
-    val result1 = solution.longestSubarray(nums1)
-    println("Result for nums1: $result1") // Ожидаемый результат: 2
+    // Пример 1
+    val timePoints1 = listOf("23:59", "00:00")
+    val result1 = solution.findMinDifference(timePoints1)
+    println("Минимальная разница для timePoints1: $result1")  // Ожидаемый результат: 1
 
-    val nums2 = intArrayOf(1, 2, 3, 4)
-    val result2 = solution.longestSubarray(nums2)
-    println("Result for nums2: $result2") // Ожидаемый результат: 1
+    // Пример 2
+    val timePoints2 = listOf("00:00", "23:59", "00:00")
+    val result2 = solution.findMinDifference(timePoints2)
+    println("Минимальная разница для timePoints2: $result2")  // Ожидаемый результат: 0
 }
