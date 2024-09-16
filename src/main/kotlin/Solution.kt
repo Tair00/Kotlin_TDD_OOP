@@ -1,20 +1,19 @@
 class Solution {
-    fun longestSubarray(nums: IntArray): Int {
+    fun findMinDifference(timePoints: List<String>): Int {
 
-        val maxVal = nums.maxOrNull() ?: return 0
+        val minutesList = timePoints.map { time ->
+            val (hours, minutes) = time.split(":").map { it.toInt() }
+            hours * 60 + minutes
+        }.sorted()
 
-        var maxLength = 0
-        var currentLength = 0
+        var minDifference = Int.MAX_VALUE
 
-            for (num in nums) {
-            if (num == maxVal) {
-                currentLength++
-                maxLength = kotlin.math.max(maxLength, currentLength)
-            } else {
-                currentLength = 0
-            }
+        for (i in 1 until minutesList.size) {
+            minDifference = minOf(minDifference, minutesList[i] - minutesList[i - 1])
         }
 
-        return maxLength
+        val wrapAroundDifference = 1440 + minutesList[0] - minutesList.last()
+
+        return minOf(minDifference, wrapAroundDifference)
     }
 }
