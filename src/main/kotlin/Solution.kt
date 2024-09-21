@@ -1,19 +1,22 @@
 class Solution {
-    fun findMinDifference(timePoints: List<String>): Int {
+    fun lexicalOrder(n: Int): List<Int> {
+        val result = mutableListOf<Int>()
+        var current = 1
 
-        val minutesList = timePoints.map { time ->
-            val (hours, minutes) = time.split(":").map { it.toInt() }
-            hours * 60 + minutes
-        }.sorted()
-
-        var minDifference = Int.MAX_VALUE
-
-        for (i in 1 until minutesList.size) {
-            minDifference = minOf(minDifference, minutesList[i] - minutesList[i - 1])
+        for (i in 1..n) {
+            result.add(current)
+            if (current * 10 <= n) {
+                current *= 10
+            } else {
+                if (current >= n) {
+                    current /= 10
+                }
+                current += 1
+                while (current % 10 == 0) {
+                    current /= 10
+                }
+            }
         }
-
-        val wrapAroundDifference = 1440 + minutesList[0] - minutesList.last()
-
-        return minOf(minDifference, wrapAroundDifference)
+        return result
     }
 }
