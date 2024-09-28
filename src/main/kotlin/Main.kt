@@ -1,6 +1,13 @@
 fun main() {
-    val solution = Solution()
-    val n = 13  // Example input
-    val result = solution.lexicalOrder(n)
-    println(result)  // Output: [1, 10, 11, 12, 13, 2, 3, 4, 5, 6, 7, 8, 9]
+    val myCircularDeque = MyCircularDeque(3)
+    println(myCircularDeque.insertFront(9)) // returns true
+    println(myCircularDeque.getRear())      // returns 9
+    println(myCircularDeque.insertFront(9)) // returns true
+    println(myCircularDeque.getRear())      // returns 9
+    println(myCircularDeque.insertLast(5))  // returns true
+    println(myCircularDeque.getFront())     // returns 9
+    println(myCircularDeque.getRear())      // returns 5
+    println(myCircularDeque.insertLast(8))  // returns false (deque is full)
+    println(myCircularDeque.deleteLast())   // returns true
+    println(myCircularDeque.getFront())     // returns 9
 }
