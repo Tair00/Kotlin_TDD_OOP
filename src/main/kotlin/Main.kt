@@ -1,33 +1,11 @@
 fun main() {
-    val allOne = AllOne() // Создаем объект AllOne
 
-    // Пример ввода данных и вызова методов
+    val arr1 = intArrayOf(40, 10, 20, 30)
+    val arr2 = intArrayOf(100, 100, 100)
+    val arr3 = intArrayOf(37, 12, 28, 9, 100, 56, 80, 5, 12)
 
-    // Увеличиваем количество для ключей "hello", "goodbye", "hello", "hello"
-    allOne.inc("hello")
-    allOne.inc("goodbye")
-    allOne.inc("hello")
-    allOne.inc("hello")
-
-    // Выводим ключ с максимальным количеством
-    println("Max Key: " + allOne.getMaxKey()) // Ожидается "hello"
-
-    // Увеличиваем количество для ключей "leet", "code", "leet"
-    allOne.inc("leet")
-    allOne.inc("code")
-    allOne.inc("leet")
-
-    // Уменьшаем количество для ключа "hello"
-    allOne.dec("hello")
-
-    // Увеличиваем количество для ключей "leet", "code", "code"
-    allOne.inc("leet")
-    allOne.inc("code")
-    allOne.inc("code")
-
-    // Выводим ключ с максимальным количеством после изменений
-    println("Max Key: " + allOne.getMaxKey()) // Ожидается "leet"
-
-    // Выводим ключ с минимальным количеством
-    println("Min Key: " + allOne.getMinKey()) // Ожидается "goodbye"
+    val solution = Solution()
+    println(solution.arrayRankTransform(arr1).joinToString(", ")) // Expected Output: [4, 1, 2, 3]
+    println(solution.arrayRankTransform(arr2).joinToString(", ")) // Expected Output: [1, 1, 1]
+    println(solution.arrayRankTransform(arr3).joinToString(", ")) // Expected Output: [5, 3, 4, 2, 8, 6, 7, 1, 3]
 }
