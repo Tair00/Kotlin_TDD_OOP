@@ -1,28 +1,22 @@
 class Solution {
-    fun checkInclusion(s1: String, s2: String): Boolean {
-        val len1 = s1.length
-        val len2 = s2.length
+    fun areSentencesSimilar(sentence1: String, sentence2: String): Boolean {
+        val words1 = sentence1.split(" ")
+        val words2 = sentence2.split(" ")
 
-        if (len1 > len2) return false
+        var i = 0
+        var j = 0
 
-        val count1 = IntArray(26)
-        val count2 = IntArray(26)
-        for (i in s1.indices) {
-            count1[s1[i] - 'a']++
-            count2[s2[i] - 'a']++
+        // Проверяем совпадение префиксов
+        while (i < words1.size && i < words2.size && words1[i] == words2[i]) {
+            i++
         }
 
-        if (count1 contentEquals count2) return true
-
-        for (i in len1 until len2) {
-
-            count2[s2[i] - 'a']++
-
-            count2[s2[i - len1] - 'a']--
-
-            if (count1 contentEquals count2) return true
+        // Проверяем совпадение суффиксов
+        while (j < words1.size - i && j < words2.size - i && words1[words1.size - 1 - j] == words2[words2.size - 1 - j]) {
+            j++
         }
 
-        return false
+        // Если префиксы и суффиксы покрывают все слова в одном из предложений, то они схожи
+        return i + j == words1.size || i + j == words2.size
     }
 }
