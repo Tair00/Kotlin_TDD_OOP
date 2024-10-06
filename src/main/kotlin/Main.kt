@@ -1,11 +1,8 @@
 fun main() {
-    val s1 = "ab"
-    val s2 = "eidbaooo"
-
     val solution = Solution()
 
-    val result = solution.checkInclusion(s1, s2)
+    val sentence1 = "My name is Haley"
+    val sentence2 = "My Haley"
 
-    // Печатаем результат
-    println("Does s2 contain a permutation of s1? $result")
+    println(solution.areSentencesSimilar(sentence1, sentence2)) // Output: true
 }
