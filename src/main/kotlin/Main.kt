@@ -1,8 +1,12 @@
 fun main() {
-    val solution = Solution()
+    val questions = QuestionFormat("Java Programming Language")
+    questions.q = KotlinQuestions()
 
-    val sentence1 = "My name is Haley"
-    val sentence2 = "My Haley"
+    questions.delete("What is class?")
+    questions.display()
 
-    println(solution.areSentencesSimilar(sentence1, sentence2)) // Output: true
+    questions.newOne("What is inheritance?")
+    questions.newOne("How many types of inheritance are there in java?")
+
+    questions.displayAll()
 }
