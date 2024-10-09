@@ -1,0 +1,3 @@
+interface MoveLogic {
+    fun move()
+}
