@@ -1,12 +1,10 @@
 fun main() {
-    val questions = QuestionFormat("Java Programming Language")
-    questions.q = KotlinQuestions()
+    val walk: MoveLogic = Walk()
+    val fly: MoveLogic = Fly()
 
-    questions.delete("What is class?")
-    questions.display()
+    val animalA: Animal = Person(walk)
+    val animalB: Animal = Bird(fly)
 
-    questions.newOne("What is inheritance?")
-    questions.newOne("How many types of inheritance are there in java?")
-
-    questions.displayAll()
+    animalA.howDoIMove()
+    animalB.howDoIMove()
 }
