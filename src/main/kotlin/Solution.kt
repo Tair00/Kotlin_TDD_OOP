@@ -1,39 +1,55 @@
-import java.util.*
-
 class Solution {
-    fun kthLargestLevelSum(root: TreeNode?, k: Int): Long {
+    fun replaceValueInTree(root: TreeNode?): TreeNode? {
+        if (root == null) return null
 
-        if (root == null) {
-            return -1
+        val queue: MutableList<TreeNode> = mutableListOf(root)
+        val parentMap = mutableMapOf<TreeNode, TreeNode>()
+        while (queue.isNotEmpty()) {
+            val levelSize = queue.size
+            for (i in 0 until levelSize) {
+                val node = queue.removeAt(0)
+
+                if (node.left != null) {
+                    queue.add(node.left!!)
+                    parentMap[node.left!!] = node
+                }
+                if (node.right != null) {
+                    queue.add(node.right!!)
+                    parentMap[node.right!!] = node
+                }
+            }
         }
 
-
-        val queue: Queue<TreeNode> = LinkedList()
         queue.add(root)
-
-        val levelSums = mutableListOf<Long>()
-
         while (queue.isNotEmpty()) {
-            var levelSize = queue.size
-            var levelSum: Long = 0
-
+            val levelSize = queue.size
+            val levelNodes = mutableListOf<TreeNode>()
+            val levelSum = mutableMapOf<TreeNode, Int>()
             for (i in 0 until levelSize) {
-                val node = queue.poll()
-                levelSum += node.`val`.toLong()
+                val node = queue.removeAt(0)
+                levelNodes.add(node)
 
-                node.left?.let { queue.add(it) }
-                node.right?.let { queue.add(it) }
+                val parent = parentMap[node]
+                if (parent != null) {
+                    levelSum[parent] = (levelSum[parent] ?: 0) + node.`val`
+                }
+
+                if (node.left != null) {
+                    queue.add(node.left!!)
+                }
+                if (node.right != null) {
+                    queue.add(node.right!!)
+                }
             }
 
-            levelSums.add(levelSum)
+            for (node in levelNodes) {
+                val parent = parentMap[node]
+                val siblingSum = levelSum[parent] ?: 0
+                val cousinSum = levelSum.values.sum() - siblingSum
+                node.`val` = cousinSum
+            }
         }
 
-        levelSums.sortDescending()
-
-        return if (levelSums.size < k) {
-            -1
-        } else {
-            levelSums[k - 1]
-        }
+        return root
     }
 }
