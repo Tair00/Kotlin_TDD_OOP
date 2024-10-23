@@ -1,20 +1,17 @@
 fun main() {
+    // Пример дерева
+    val root = TreeNode(5)
+    root.left = TreeNode(4)
+    root.right = TreeNode(9)
+    root.left?.left = TreeNode(1)
+    root.left?.right = TreeNode(10)
+    root.right?.right = TreeNode(7)
 
-    val root = TreeNode(154282)
-    root.left = TreeNode(259410)
-    root.right = TreeNode(741548)
-
-    root.left?.left = TreeNode(66685)
-    root.left?.right = TreeNode(834946)
-    root.right?.left = TreeNode(24416)
-    root.right?.right = TreeNode(49355)
-
-
+    // Создаем экземпляр решения
     val solution = Solution()
 
+    // Вызов функции замены значений
+    val newRoot = solution.replaceValueInTree(root)
 
-    val k = 3
-    val result = solution.kthLargestLevelSum(root, k)
 
-    println("Результат: $result")
 }
