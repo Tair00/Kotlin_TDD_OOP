@@ -1,55 +1,31 @@
 class Solution {
-    fun replaceValueInTree(root: TreeNode?): TreeNode? {
-        if (root == null) return null
+    fun maxMoves(grid: Array<IntArray>): Int {
+        val m = grid.size
+        val n = grid[0].size
 
-        val queue: MutableList<TreeNode> = mutableListOf(root)
-        val parentMap = mutableMapOf<TreeNode, TreeNode>()
-        while (queue.isNotEmpty()) {
-            val levelSize = queue.size
-            for (i in 0 until levelSize) {
-                val node = queue.removeAt(0)
+        val dp = Array(m) { IntArray(n) { -1 } }
 
-                if (node.left != null) {
-                    queue.add(node.left!!)
-                    parentMap[node.left!!] = node
-                }
-                if (node.right != null) {
-                    queue.add(node.right!!)
-                    parentMap[node.right!!] = node
+        fun dfs(row: Int, col: Int): Int {
+            if (col == n - 1) return 0
+            if (dp[row][col] != -1) return dp[row][col]
+
+            var maxMoves = 0
+            val directions = arrayOf(-1, 0, 1)
+            for (dir in directions) {
+                val newRow = row + dir
+                val newCol = col + 1
+                if (newRow in 0 until m && newCol < n && grid[newRow][newCol] > grid[row][col]) {
+                    maxMoves = maxOf(maxMoves, 1 + dfs(newRow, newCol))
                 }
             }
+            dp[row][col] = maxMoves
+            return dp[row][col]
         }
 
-        queue.add(root)
-        while (queue.isNotEmpty()) {
-            val levelSize = queue.size
-            val levelNodes = mutableListOf<TreeNode>()
-            val levelSum = mutableMapOf<TreeNode, Int>()
-            for (i in 0 until levelSize) {
-                val node = queue.removeAt(0)
-                levelNodes.add(node)
-
-                val parent = parentMap[node]
-                if (parent != null) {
-                    levelSum[parent] = (levelSum[parent] ?: 0) + node.`val`
-                }
-
-                if (node.left != null) {
-                    queue.add(node.left!!)
-                }
-                if (node.right != null) {
-                    queue.add(node.right!!)
-                }
-            }
-
-            for (node in levelNodes) {
-                val parent = parentMap[node]
-                val siblingSum = levelSum[parent] ?: 0
-                val cousinSum = levelSum.values.sum() - siblingSum
-                node.`val` = cousinSum
-            }
+        var maxResult = 0
+        for (i in 0 until m) {
+            maxResult = maxOf(maxResult, dfs(i, 0))
         }
-
-        return root
+        return maxResult
     }
 }
