@@ -1,17 +1,20 @@
 fun main() {
-    // Пример дерева
-    val root = TreeNode(5)
-    root.left = TreeNode(4)
-    root.right = TreeNode(9)
-    root.left?.left = TreeNode(1)
-    root.left?.right = TreeNode(10)
-    root.right?.right = TreeNode(7)
-
-    // Создаем экземпляр решения
     val solution = Solution()
 
-    // Вызов функции замены значений
-    val newRoot = solution.replaceValueInTree(root)
+    // Пример 1
+    val grid1 = arrayOf(
+        intArrayOf(2, 4, 3, 5),
+        intArrayOf(5, 4, 9, 3),
+        intArrayOf(3, 4, 2, 11),
+        intArrayOf(10, 9, 13, 15)
+    )
+    println("Maximum moves for grid1: ${solution.maxMoves(grid1)}")  // Ожидаемый вывод: 3
 
-
+    // Пример 2
+    val grid2 = arrayOf(
+        intArrayOf(3, 2, 4),
+        intArrayOf(2, 1, 9),
+        intArrayOf(1, 1, 7)
+    )
+    println("Maximum moves for grid2: ${solution.maxMoves(grid2)}")  // Ожидаемый вывод: 0
 }
