@@ -7,11 +7,12 @@ class VigenereCipher(private val key: String) {
         for (i in text.indices) {
             val currentChar = text[i]
             if (currentChar.isLetter()) {
-                val offset = if (currentChar.isUpperCase()) 'A' else 'a'
-                val keyChar = key[i % keyLength].toUpperCase()
-                val shift = keyChar - 'A'
-                val encryptedChar = (currentChar + shift - offset) % 26 + offset
-                result.append(encryptedChar.toChar())
+                val offset = if (currentChar.isUpperCase()) 'A'.code else 'a'.code
+                val keyChar = key[i % keyLength].uppercaseChar()
+
+                val shift = keyChar.code - 'A'.code
+                val encryptedChar = ((currentChar.code + shift - offset) % 26 + offset).toChar()
+                result.append(encryptedChar)
             } else {
                 result.append(currentChar) // Добавляем небуквенные символы без изменения
             }
@@ -26,11 +27,11 @@ class VigenereCipher(private val key: String) {
         for (i in text.indices) {
             val currentChar = text[i]
             if (currentChar.isLetter()) {
-                val offset = if (currentChar.isUpperCase()) 'A' else 'a'
-                val keyChar = key[i % keyLength].toUpperCase()
-                val shift = keyChar - 'A'
-                val decryptedChar = (currentChar - shift - offset + 26) % 26 + offset
-                result.append(decryptedChar.toChar())
+                val offset = if (currentChar.isUpperCase()) 'A'.code else 'a'.code
+                val keyChar = key[i % keyLength].uppercaseChar()
+                val shift = keyChar.code - 'A'.code
+                val decryptedChar = (((currentChar.code - shift - offset + 26) % 26) + offset).toChar()
+                result.append(decryptedChar)
             } else {
                 result.append(currentChar)
             }
