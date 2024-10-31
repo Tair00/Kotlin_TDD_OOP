@@ -1,20 +1,18 @@
+import java.util.*
+
 fun main() {
-    val solution = Solution()
+    val scanner = Scanner(System.`in`)
 
-    // Пример 1
-    val grid1 = arrayOf(
-        intArrayOf(2, 4, 3, 5),
-        intArrayOf(5, 4, 9, 3),
-        intArrayOf(3, 4, 2, 11),
-        intArrayOf(10, 9, 13, 15)
-    )
-    println("Maximum moves for grid1: ${solution.maxMoves(grid1)}")  // Ожидаемый вывод: 3
+    println("Введите текст для шифрования:")
+    val inputText = scanner.nextLine()
 
-    // Пример 2
-    val grid2 = arrayOf(
-        intArrayOf(3, 2, 4),
-        intArrayOf(2, 1, 9),
-        intArrayOf(1, 1, 7)
-    )
-    println("Maximum moves for grid2: ${solution.maxMoves(grid2)}")  // Ожидаемый вывод: 0
+    println("Введите ключевое слово:")
+    val key = scanner.nextLine()
+
+    val cipher = VigenereCipher(key)
+    val encryptedText = cipher.encrypt(inputText)
+    println("Зашифрованный текст: $encryptedText")
+
+    val decryptedText = cipher.decrypt(encryptedText)
+    println("Расшифрованный текст: $decryptedText")
 }
