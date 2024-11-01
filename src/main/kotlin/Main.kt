@@ -1,28 +1,12 @@
-import java.util.Scanner
-
 fun main() {
-    // Создаем объект Scanner для ввода данных с консоли
-    val scanner = Scanner(System.`in`)
+    val solution = Solution()
 
-    // Запрашиваем у пользователя ввод ключа
-    println("Введите ключ для шифрования:")
-    val key = scanner.nextLine()
+    val s1 = "leeetcode"
+    println("Input: $s1, Output: ${solution.makeFancyString(s1)}")  // Ожидается: "leetcode"
 
-    // Создаем экземпляр VigenereCipher
-    val cipher = VigenereCipher(key)
+    val s2 = "aaabaaaa"
+    println("Input: $s2, Output: ${solution.makeFancyString(s2)}")  // Ожидается: "aabaa"
 
-    // Запрашиваем у пользователя ввод текста для шифрования
-    println("Введите текст для шифрования:")
-    val originalText = scanner.nextLine()
-
-    // Шифруем текст
-    val encryptedText = cipher.encrypt(originalText)
-    println("Зашифрованный текст: $encryptedText")
-
-    // Расшифровываем текст
-    val decryptedText = cipher.decrypt(encryptedText)
-    println("Расшифрованный текст: $decryptedText")
-
-    // Закрываем сканер
-    scanner.close()
+    val s3 = "aab"
+    println("Input: $s3, Output: ${solution.makeFancyString(s3)}")  // Ожидается: "aab"
 }
