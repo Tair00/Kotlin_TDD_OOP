@@ -1,31 +1,15 @@
 class Solution {
-    fun maxMoves(grid: Array<IntArray>): Int {
-        val m = grid.size
-        val n = grid[0].size
+    fun makeFancyString(s: String): String {
+        val result = StringBuilder()
 
-        val dp = Array(m) { IntArray(n) { -1 } }
-
-        fun dfs(row: Int, col: Int): Int {
-            if (col == n - 1) return 0
-            if (dp[row][col] != -1) return dp[row][col]
-
-            var maxMoves = 0
-            val directions = arrayOf(-1, 0, 1)
-            for (dir in directions) {
-                val newRow = row + dir
-                val newCol = col + 1
-                if (newRow in 0 until m && newCol < n && grid[newRow][newCol] > grid[row][col]) {
-                    maxMoves = maxOf(maxMoves, 1 + dfs(newRow, newCol))
-                }
+        for (i in s.indices) {
+            // Добавляем текущий символ, если предыдущие два символа не такие же
+            if (i < 2 || !(s[i] == s[i - 1] && s[i] == s[i - 2])) {
+                result.append(s[i])
             }
-            dp[row][col] = maxMoves
-            return dp[row][col]
         }
 
-        var maxResult = 0
-        for (i in 0 until m) {
-            maxResult = maxOf(maxResult, dfs(i, 0))
-        }
-        return maxResult
+        return result.toString()
     }
 }
+
