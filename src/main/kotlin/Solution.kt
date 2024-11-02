@@ -1,15 +1,16 @@
 class Solution {
-    fun makeFancyString(s: String): String {
-        val result = StringBuilder()
+    fun isCircularSentence(sentence: String): Boolean {
+        val words = sentence.split(" ")
+        val n = words.size
 
-        for (i in s.indices) {
-            // Добавляем текущий символ, если предыдущие два символа не такие же
-            if (i < 2 || !(s[i] == s[i - 1] && s[i] == s[i - 2])) {
-                result.append(s[i])
+        for (i in words.indices) {
+            val currentWord = words[i]
+            val nextWord = words[(i + 1) % n]
+            if (currentWord.last() != nextWord.first()) {
+                return false
             }
         }
 
-        return result.toString()
+        return true
     }
 }
-
