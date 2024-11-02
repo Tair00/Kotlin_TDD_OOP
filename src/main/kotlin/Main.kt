@@ -1,12 +1,16 @@
 fun main() {
     val solution = Solution()
 
-    val s1 = "leeetcode"
-    println("Input: $s1, Output: ${solution.makeFancyString(s1)}")  // Ожидается: "leetcode"
+    val testSentences = listOf(
+        "leetcode exercises sound delightful",
+        "eetcode",
+        "Leetcode is cool",
+        "happy Leetcode",
+        "a"
+    )
 
-    val s2 = "aaabaaaa"
-    println("Input: $s2, Output: ${solution.makeFancyString(s2)}")  // Ожидается: "aabaa"
-
-    val s3 = "aab"
-    println("Input: $s3, Output: ${solution.makeFancyString(s3)}")  // Ожидается: "aab"
+    for (sentence in testSentences) {
+        val result = solution.isCircularSentence(sentence)
+        println("Is the sentence '$sentence' circular? $result")
+    }
 }
