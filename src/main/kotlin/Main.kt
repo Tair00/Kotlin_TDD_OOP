@@ -1,16 +1,12 @@
 fun main() {
     val solution = Solution()
 
-    val testSentences = listOf(
-        "leetcode exercises sound delightful",
-        "eetcode",
-        "Leetcode is cool",
-        "happy Leetcode",
-        "a"
-    )
+    // Test cases
+    val s1 = "abcde"
+    val goal1 = "cdeab"
+    println(solution.rotateString(s1, goal1)) // Output: true
 
-    for (sentence in testSentences) {
-        val result = solution.isCircularSentence(sentence)
-        println("Is the sentence '$sentence' circular? $result")
-    }
+    val s2 = "abcde"
+    val goal2 = "abced"
+    println(solution.rotateString(s2, goal2)) // Output: false
 }
