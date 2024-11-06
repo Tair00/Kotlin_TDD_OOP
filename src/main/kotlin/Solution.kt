@@ -1,19 +1,10 @@
 class Solution {
-    fun compressedString(word: String): String {
-        val comp = StringBuilder()
-        var i = 0
+    fun canSortArray(nums: IntArray): Boolean {
 
-        while (i < word.length) {
-                        val c = word[i]
-            var count = 0
+        val groupedBySetBits = nums.groupBy { Integer.bitCount(it) }
 
-                       while (i < word.length && word[i] == c && count < 9) {
-                count++
-                i++
-            }
-            comp.append(count).append(c)
-        }
+        val sortedGrouped = groupedBySetBits.values.flatMap { it.sorted() }
 
-        return comp.toString()
+        return sortedGrouped == nums.sorted()
     }
 }
