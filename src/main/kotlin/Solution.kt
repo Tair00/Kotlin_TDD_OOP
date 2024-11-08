@@ -1,25 +1,19 @@
 class Solution {
-    fun canSortArray(nums: IntArray): Boolean {
-        var prevSetBits = -1
-        var prevMax = Int.MIN_VALUE
-        var currMax = Int.MIN_VALUE
-        var currMin = Int.MAX_VALUE
+    fun getMaximumXor(nums: IntArray, maximumBit: Int): IntArray {
+        val n = nums.size
+        val maxNum = (1 shl maximumBit) - 1
+        val answer = IntArray(n)
+        var xorAll = 0
 
         for (num in nums) {
-            val setBits = Integer.bitCount(num)
-            if (setBits != prevSetBits) {
-                if (prevMax > currMin) {
-                    return false            }
-                prevSetBits = setBits
-                prevMax = currMax
-                currMax = num
-                currMin = num
-            } else {
-                currMax = maxOf(currMax, num)
-                currMin = minOf(currMin, num)
-            }
+            xorAll = xorAll xor num
         }
 
-        return prevMax <= currMin
+        for (i in 0 until n) {
+            answer[i] = xorAll xor maxNum
+            xorAll = xorAll xor nums[n - 1 - i]
+        }
+
+        return answer
     }
 }
