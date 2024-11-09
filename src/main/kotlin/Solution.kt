@@ -1,19 +1,22 @@
+import kotlin.math.log2
+
 class Solution {
-    fun getMaximumXor(nums: IntArray, maximumBit: Int): IntArray {
-        val n = nums.size
-        val maxNum = (1 shl maximumBit) - 1
-        val answer = IntArray(n)
-        var xorAll = 0
+    fun minEnd(n: Int, x: Int): Long {
+        val kMaxBit = (log2(n.toDouble()) + log2(x.toDouble()) + 2).toInt()
+        val k = (n - 1).toLong()
+        var ans = x.toLong()
+        var kBinaryIndex = 0
 
-        for (num in nums) {
-            xorAll = xorAll xor num
+        for (i in 0 until kMaxBit) {
+            if ((ans shr i and 1) == 0L) {
+
+                if ((k shr kBinaryIndex) and 1L == 1L) {
+                    ans = ans or (1L shl i)
+                }
+                kBinaryIndex++
+            }
         }
 
-        for (i in 0 until n) {
-            answer[i] = xorAll xor maxNum
-            xorAll = xorAll xor nums[n - 1 - i]
-        }
-
-        return answer
+        return ans
     }
 }
