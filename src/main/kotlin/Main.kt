@@ -1,7 +1,7 @@
 fun main() {
     val solution = Solution()
-    val n = 3
-    val x = 4
-    val result = solution.minEnd(n, x)
-    println("Minimum possible value of nums[n - 1]: $result")
+    val nums = intArrayOf(1, 2, 3)
+    val k = 2
+    val result = solution.minimumSubarrayLength(nums, k)
+    println("Length of shortest subarray: $result")
 }
