@@ -1,22 +1,43 @@
-import kotlin.math.log2
-
 class Solution {
-    fun minEnd(n: Int, x: Int): Long {
-        val kMaxBit = (log2(n.toDouble()) + log2(x.toDouble()) + 2).toInt()
-        val k = (n - 1).toLong()
-        var ans = x.toLong()
-        var kBinaryIndex = 0
+    private val kMaxBit = 30
 
-        for (i in 0 until kMaxBit) {
-            if ((ans shr i and 1) == 0L) {
+    fun minimumSubarrayLength(nums: IntArray, k: Int): Int {
+        val kMax = 50
+        val n = nums.size
+        var ans = n + 1
+        var ors = 0
+        val count = IntArray(kMax + 1)
 
-                if ((k shr kBinaryIndex) and 1L == 1L) {
-                    ans = ans or (1L shl i)
-                }
-                kBinaryIndex++
+        var l = 0
+        for (r in 0 until n) {
+            ors = orNum(ors, nums[r], count)
+            while (ors >= k && l <= r) {
+                ans = minOf(ans, r - l + 1)
+                ors = undoOrNum(ors, nums[l], count)
+                l++
             }
         }
 
-        return ans
+        return if (ans == n + 1) -1 else ans
+    }
+
+    private fun orNum(ors: Int, num: Int, count: IntArray): Int {
+        var ors = ors
+        for (i in 0 until kMaxBit) {
+            if ((num shr i and 1) == 1 && ++count[i] == 1) {
+                ors += 1 shl i
+            }
+        }
+        return ors
+    }
+
+    private fun undoOrNum(ors: Int, num: Int, count: IntArray): Int {
+        var ors = ors
+        for (i in 0 until kMaxBit) {
+            if ((num shr i and 1) == 1 && --count[i] == 0) {
+                ors -= 1 shl i
+            }
+        }
+        return ors
     }
 }
