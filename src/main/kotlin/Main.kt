@@ -1,7 +1,18 @@
 fun main() {
+
     val solution = Solution()
-    val nums = intArrayOf(1, 2, 3)
-    val k = 2
-    val result = solution.minimumSubarrayLength(nums, k)
-    println("Length of shortest subarray: $result")
+
+
+    val items = arrayOf(
+        intArrayOf(1, 2),
+        intArrayOf(3, 2),
+        intArrayOf(2, 4),
+        intArrayOf(5, 6),
+        intArrayOf(3, 5)
+    )
+    val queries = intArrayOf(1, 2, 3, 4, 5, 6)
+
+    val result = solution.maximumBeauty(items, queries)
+
+    println(result.joinToString(", "))
 }
