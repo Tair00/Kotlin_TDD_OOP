@@ -1,43 +1,27 @@
 class Solution {
-    private val kMaxBit = 30
+    fun maximumBeauty(items: Array<IntArray>, queries: IntArray): IntArray {
 
-    fun minimumSubarrayLength(nums: IntArray, k: Int): Int {
-        val kMax = 50
-        val n = nums.size
-        var ans = n + 1
-        var ors = 0
-        val count = IntArray(kMax + 1)
+        items.sortWith(compareBy({ it[0] }, { it[1] }))
 
-        var l = 0
-        for (r in 0 until n) {
-            ors = orNum(ors, nums[r], count)
-            while (ors >= k && l <= r) {
-                ans = minOf(ans, r - l + 1)
-                ors = undoOrNum(ors, nums[l], count)
-                l++
-            }
+        val maxBeautyUpToPrice = mutableListOf<Pair<Int, Int>>()
+        var currentMaxBeauty = 0
+        for (item in items) {
+            val price = item[0]
+            val beauty = item[1]
+            currentMaxBeauty = maxOf(currentMaxBeauty, beauty)
+            maxBeautyUpToPrice.add(Pair(price, currentMaxBeauty))
         }
 
-        return if (ans == n + 1) -1 else ans
-    }
-
-    private fun orNum(ors: Int, num: Int, count: IntArray): Int {
-        var ors = ors
-        for (i in 0 until kMaxBit) {
-            if ((num shr i and 1) == 1 && ++count[i] == 1) {
-                ors += 1 shl i
+        val sortedQueries = queries.withIndex().sortedBy { it.value }
+        val result = IntArray(queries.size)
+        var i = 0
+        for ((index, query) in sortedQueries) {
+            while (i < maxBeautyUpToPrice.size && maxBeautyUpToPrice[i].first <= query) {
+                i++
             }
+            result[index] = if (i > 0) maxBeautyUpToPrice[i - 1].second else 0
         }
-        return ors
-    }
 
-    private fun undoOrNum(ors: Int, num: Int, count: IntArray): Int {
-        var ors = ors
-        for (i in 0 until kMaxBit) {
-            if ((num shr i and 1) == 1 && --count[i] == 0) {
-                ors -= 1 shl i
-            }
-        }
-        return ors
+        return result
     }
 }
