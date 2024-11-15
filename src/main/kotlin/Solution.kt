@@ -1,28 +1,33 @@
 class Solution {
-    fun minimizedMaximum(n: Int, quantities: IntArray): Int {
-        var left = 1
-        var right = quantities.maxOrNull() ?: 1
+    fun findLengthOfShortestSubarray(arr: IntArray): Int {
+        val n = arr.size
+        var left = 0
+        while (left < n - 1 && arr[left] <= arr[left + 1]) {
+            left++
+        }
 
-        while (left < right) {
-            val mid = left + (right - left) / 2
-            if (canDistribute(n, quantities, mid)) {
-                right = mid
+        if (left == n - 1) return 0
+
+        var right = n - 1
+        while (right > 0 && arr[right - 1] <= arr[right]) {
+            right--
+        }
+
+        var result = n - left - 1
+
+        result = minOf(result, right)
+
+        var i = 0
+        var j = right
+        while (i <= left && j < n) {
+            if (arr[i] <= arr[j]) {
+                result = minOf(result, j - i - 1)
+                i++
             } else {
-                left = mid + 1
+                j++
             }
         }
 
-        return left
-    }
-
-    private fun canDistribute(n: Int, quantities: IntArray, maxProductsPerStore: Int): Boolean {
-        var storesNeeded = 0
-        for (quantity in quantities) {
-            storesNeeded += (quantity + maxProductsPerStore - 1) / maxProductsPerStore
-            if (storesNeeded > n) {
-                return false
-            }
-        }
-        return true
+        return result
     }
 }
