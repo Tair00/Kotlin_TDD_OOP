@@ -1,18 +1,23 @@
 fun main() {
     val solution = Solution()
 
-    // Example 1
-    val n1 = 6
-    val quantities1 = intArrayOf(11, 6)
-    println("Minimum possible x for Example 1: ${solution.minimizedMaximum(n1, quantities1)}")  // Expected output: 3
+    // Test case 1
+    val arr1 = intArrayOf(1, 2, 3, 10, 4, 2, 3, 5)
+    println("Input: ${arr1.joinToString(", ")}")
+    println("Output: ${solution.findLengthOfShortestSubarray(arr1)}") // Expected: 3
 
-    // Example 2
-    val n2 = 7
-    val quantities2 = intArrayOf(15, 10, 10)
-    println("Minimum possible x for Example 2: ${solution.minimizedMaximum(n2, quantities2)}")  // Expected output: 5
+    // Test case 2
+    val arr2 = intArrayOf(5, 4, 3, 2, 1)
+    println("\nInput: ${arr2.joinToString(", ")}")
+    println("Output: ${solution.findLengthOfShortestSubarray(arr2)}") // Expected: 4
 
-    // Example 3
-    val n3 = 1
-    val quantities3 = intArrayOf(100000)
-    println("Minimum possible x for Example 3: ${solution.minimizedMaximum(n3, quantities3)}")  // Expected output: 100000
+    // Test case 3
+    val arr3 = intArrayOf(1, 2, 3)
+    println("\nInput: ${arr3.joinToString(", ")}")
+    println("Output: ${solution.findLengthOfShortestSubarray(arr3)}") // Expected: 0
+
+    // Additional test case
+    val arr4 = intArrayOf(1, 3, 2, 4, 5)
+    println("\nInput: ${arr4.joinToString(", ")}")
+    println("Output: ${solution.findLengthOfShortestSubarray(arr4)}") // Expected: 1
 }
