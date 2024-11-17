@@ -1,33 +1,32 @@
+import java.util.Deque
+import java.util.LinkedList
+
 class Solution {
-    fun findLengthOfShortestSubarray(arr: IntArray): Int {
-        val n = arr.size
-        var left = 0
-        while (left < n - 1 && arr[left] <= arr[left + 1]) {
-            left++
+    fun shortestSubarray(nums: IntArray, k: Int): Int {
+        val n = nums.size
+        val prefixSum = LongArray(n + 1)
+
+        for (i in nums.indices) {
+            prefixSum[i + 1] = prefixSum[i] + nums[i]
         }
 
-        if (left == n - 1) return 0
+        var minLength = Int.MAX_VALUE
+        val deque: Deque<Int> = LinkedList()
 
-        var right = n - 1
-        while (right > 0 && arr[right - 1] <= arr[right]) {
-            right--
-        }
+        for (i in prefixSum.indices) {
 
-        var result = n - left - 1
-
-        result = minOf(result, right)
-
-        var i = 0
-        var j = right
-        while (i <= left && j < n) {
-            if (arr[i] <= arr[j]) {
-                result = minOf(result, j - i - 1)
-                i++
-            } else {
-                j++
+            while (deque.isNotEmpty() && prefixSum[i] - prefixSum[deque.first()] >= k) {
+                minLength = minOf(minLength, i - deque.removeFirst())
             }
+
+
+            while (deque.isNotEmpty() && prefixSum[i] <= prefixSum[deque.last()]) {
+                deque.removeLast()
+            }
+
+            deque.addLast(i)
         }
 
-        return result
+        return if (minLength == Int.MAX_VALUE) -1 else minLength
     }
 }
