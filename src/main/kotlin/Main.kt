@@ -2,22 +2,17 @@ fun main() {
     val solution = Solution()
 
     // Test case 1
-    val arr1 = intArrayOf(1, 2, 3, 10, 4, 2, 3, 5)
-    println("Input: ${arr1.joinToString(", ")}")
-    println("Output: ${solution.findLengthOfShortestSubarray(arr1)}") // Expected: 3
+    val nums = intArrayOf(1)
+    val k = 1
+    println(Solution().shortestSubarray(nums, k)) // Output: 1
 
-    // Test case 2
-    val arr2 = intArrayOf(5, 4, 3, 2, 1)
-    println("\nInput: ${arr2.joinToString(", ")}")
-    println("Output: ${solution.findLengthOfShortestSubarray(arr2)}") // Expected: 4
 
-    // Test case 3
-    val arr3 = intArrayOf(1, 2, 3)
-    println("\nInput: ${arr3.joinToString(", ")}")
-    println("Output: ${solution.findLengthOfShortestSubarray(arr3)}") // Expected: 0
+    val nums1 = intArrayOf(1, 2)
+    val a = 4
+    println(Solution().shortestSubarray(nums, a)) // Output: -1
 
-    // Additional test case
-    val arr4 = intArrayOf(1, 3, 2, 4, 5)
-    println("\nInput: ${arr4.joinToString(", ")}")
-    println("Output: ${solution.findLengthOfShortestSubarray(arr4)}") // Expected: 1
+    val nums2 = intArrayOf(2, -1, 2)
+    val b = 3
+    println(Solution().shortestSubarray(nums, b)) // Output: 3
+
 }
