@@ -1,18 +1,28 @@
 class Solution {
-    fun decrypt(code: IntArray, k: Int): IntArray {
-        val n = code.size
-        if (k == 0) return IntArray(n) { 0 }
+    fun maximumSubarraySum(nums: IntArray, k: Int): Long {
+        var maxSum = 0L
+        var currentSum = 0L
+        val seen = mutableSetOf<Int>()
+        var left = 0
 
-        val result = IntArray(n)
-        val extended = code + code
-        for (i in code.indices) {
-            if (k > 0) {
-                result[i] = (1..k).sumOf { extended[i + it] }
-            } else {
-                result[i] = (-1 downTo k).sumOf { extended[i + n + it] }
+        for (right in nums.indices) {
+
+            while (seen.contains(nums[right])) {
+                  currentSum -= nums[left]
+                seen.remove(nums[left])
+                left++
+            }
+
+            seen.add(nums[right])
+            currentSum += nums[right]
+  if (right - left + 1 == k) {
+                maxSum = maxOf(maxSum, currentSum)
+      currentSum -= nums[left]
+                seen.remove(nums[left])
+                left++
             }
         }
 
-        return result
+        return maxSum
     }
 }
