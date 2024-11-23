@@ -1,28 +1,30 @@
 class Solution {
-    fun maximumSubarraySum(nums: IntArray, k: Int): Long {
-        var maxSum = 0L
-        var currentSum = 0L
-        val seen = mutableSetOf<Int>()
-        var left = 0
+    fun rotateTheBox(box: Array<CharArray>): Array<CharArray> {
+        val m = box.size
+        val n = box[0].size
 
-        for (right in nums.indices) {
-
-            while (seen.contains(nums[right])) {
-                  currentSum -= nums[left]
-                seen.remove(nums[left])
-                left++
-            }
-
-            seen.add(nums[right])
-            currentSum += nums[right]
-  if (right - left + 1 == k) {
-                maxSum = maxOf(maxSum, currentSum)
-      currentSum -= nums[left]
-                seen.remove(nums[left])
-                left++
+        for (row in box) {
+            var empty = row.size - 1
+            for (col in row.size - 1 downTo 0) {
+                when (row[col]) {
+                    '#' -> {
+                        row[col] = '.'
+                        row[empty] = '#'
+                        empty--
+                    }
+                    '*' -> empty = col - 1
+                }
             }
         }
 
-        return maxSum
+        val rotatedBox = Array(n) { CharArray(m) }
+        for (i in 0 until m) {
+            for (j in 0 until n) {
+                rotatedBox[j][m - 1 - i] = box[i][j]
+            }
+        }
+
+        return rotatedBox
     }
+
 }
